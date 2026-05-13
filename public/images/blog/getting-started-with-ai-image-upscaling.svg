@@ -1,0 +1,13 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="48" fill="#1A1A2E"/>
+  <circle cx="300" cy="180" r="140" fill="#6C63FF" fill-opacity="0.25"/>
+  <circle cx="930" cy="500" r="180" fill="#6C63FF" fill-opacity="0.18"/>
+  <rect x="200" y="250" width="800" height="180" rx="36" fill="#22223B" stroke="#2E2E4A" stroke-width="4"/>
+  <path d="M340 360L460 280L560 340L680 250L860 330" stroke="#F0F0F0" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="340" cy="360" r="18" fill="#6C63FF"/>
+  <circle cx="460" cy="280" r="18" fill="#6C63FF"/>
+  <circle cx="560" cy="340" r="18" fill="#6C63FF"/>
+  <circle cx="680" cy="250" r="18" fill="#6C63FF"/>
+  <circle cx="860" cy="330" r="18" fill="#6C63FF"/>
+  <text x="220" y="160" fill="#F0F0F0" font-family="Inter, Arial, sans-serif" font-size="56" font-weight="700">AI Upscaling</text>
+</svg>

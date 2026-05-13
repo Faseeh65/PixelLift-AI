@@ -1,0 +1,11 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="48" fill="#1A1A2E"/>
+  <rect x="140" y="120" width="920" height="435" rx="40" fill="#22223B" stroke="#2E2E4A" stroke-width="4"/>
+  <circle cx="300" cy="305" r="90" fill="#6C63FF" fill-opacity="0.28"/>
+  <circle cx="600" cy="305" r="90" fill="#6C63FF" fill-opacity="0.22"/>
+  <circle cx="900" cy="305" r="90" fill="#6C63FF" fill-opacity="0.18"/>
+  <path d="M250 305H350" stroke="#F0F0F0" stroke-width="12" stroke-linecap="round"/>
+  <path d="M550 305H650" stroke="#F0F0F0" stroke-width="12" stroke-linecap="round"/>
+  <path d="M850 305H950" stroke="#F0F0F0" stroke-width="12" stroke-linecap="round"/>
+  <text x="175" y="600" fill="#F0F0F0" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="700">Best Free AI Tools</text>
+</svg>

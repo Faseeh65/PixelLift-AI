@@ -1,0 +1,12 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="48" fill="#0F0F0F"/>
+  <rect x="120" y="110" width="960" height="455" rx="42" fill="#1A1A2E" stroke="#2E2E4A" stroke-width="4"/>
+  <rect x="200" y="180" width="320" height="320" rx="28" fill="#22223B"/>
+  <rect x="680" y="180" width="200" height="200" rx="28" fill="#6C63FF" fill-opacity="0.22"/>
+  <rect x="700" y="210" width="160" height="24" rx="12" fill="#6C63FF"/>
+  <rect x="700" y="258" width="120" height="24" rx="12" fill="#9CA3AF"/>
+  <rect x="700" y="306" width="140" height="24" rx="12" fill="#9CA3AF"/>
+  <path d="M200 360H520" stroke="#6C63FF" stroke-width="12" stroke-linecap="round"/>
+  <path d="M240 300L300 260L360 310L420 230L480 280" stroke="#F0F0F0" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="180" y="600" fill="#F0F0F0" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="700">Real-ESRGAN Explained</text>
+</svg>
