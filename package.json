@@ -18,14 +18,14 @@
     "next": "16.2.6",
     "next-contentlayer2": "^0.5.8",
     "next-sitemap": "^4.2.3",
+    "onnxruntime-web": "^1.26.0",
     "react": "19.2.4",
     "react-compare-slider": "^4.0.0",
     "react-dom": "19.2.4",
     "react-dropzone": "^15.0.0",
     "react-hot-toast": "^2.6.0",
     "react-markdown": "^10.1.0",
-    "reading-time": "^1.5.0",
-    "replicate": "^1.4.0"
+    "reading-time": "^1.5.0"
   },
   "devDependencies": {
     "@contentlayer2/source-files": "^0.5.8",

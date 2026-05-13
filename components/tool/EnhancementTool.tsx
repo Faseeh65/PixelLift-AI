@@ -9,6 +9,7 @@ import { toast } from "@/components/ui/Toast";
 import { UploadZone } from "@/components/tool/UploadZone";
 import { ModeSelector } from "@/components/tool/ModeSelector";
 import { ComparisonSlider } from "@/components/tool/ComparisonSlider";
+import { BrowserEnhancementError, enhanceImageInBrowser } from "@/lib/browser-enhance";
 
 interface EnhancementToolProps {
   showUsageCounter?: boolean;
@@ -20,6 +21,7 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
   const [mode, setMode] = useState<EnhancementMode>("2x");
   const [enhancedUrl, setEnhancedUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const originalUrl = useMemo(() => {
     if (!selectedFile) {
       return null;
@@ -36,45 +38,42 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
     };
   }, [originalUrl]);
 
+  useEffect(() => {
+    return () => {
+      if (enhancedUrl?.startsWith("blob:")) {
+        URL.revokeObjectURL(enhancedUrl);
+      }
+    };
+  }, [enhancedUrl]);
+
   async function handleEnhance() {
     if (!selectedFile) {
       toast.error("Please upload an image first.");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("image", selectedFile);
-    formData.append("mode", mode);
-
     try {
       setIsLoading(true);
-      const response = await fetch("/api/enhance", {
-        method: "POST",
-        body: formData,
-      });
-
-      const payload = (await response.json()) as {
-        success?: boolean;
-        error?: string;
-        enhancedUrl?: string;
-        limitReached?: boolean;
-      };
-
-      if (!response.ok) {
-        throw new Error(payload.error ?? "Enhancement failed.");
+      setStatusMessage("Preparing browser model...");
+      if (enhancedUrl?.startsWith("blob:")) {
+        URL.revokeObjectURL(enhancedUrl);
       }
 
-      if (!payload.enhancedUrl) {
-        throw new Error("Enhancement failed.");
-      }
-
-      setEnhancedUrl(payload.enhancedUrl);
-      toast.success("Your image is ready.");
+      const result = await enhanceImageInBrowser(selectedFile, mode, setStatusMessage);
+      setEnhancedUrl(result.url);
+      const modeLabel =
+        mode === "denoise" ? "denoised" : mode === "4x" ? "4x enhanced" : "2x enhanced";
+      toast.success(`Your image is ready and ${modeLabel}.`);
     } catch (error) {
       console.error("[enhancement-tool] error:", error);
-      toast.error(error instanceof Error ? error.message : "Enhancement failed.");
+      if (error instanceof BrowserEnhancementError) {
+        toast.error(error.message);
+      } else {
+        toast.error(error instanceof Error ? error.message : "Enhancement failed.");
+      }
     } finally {
       setIsLoading(false);
+      setStatusMessage(null);
     }
   }
 
@@ -84,14 +83,10 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
     }
 
     try {
-      const response = await fetch(enhancedUrl);
-      const blob = await response.blob();
-      const objectUrl = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
-      anchor.href = objectUrl;
+      anchor.href = enhancedUrl;
       anchor.download = `pixellift-enhanced-${Date.now()}.png`;
       anchor.click();
-      URL.revokeObjectURL(objectUrl);
     } catch (error) {
       console.error("[enhancement-tool] download error:", error);
       toast.error("Unable to download the image.");
@@ -100,15 +95,19 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
 
   function handleReset() {
     setSelectedFile(null);
+    if (enhancedUrl?.startsWith("blob:")) {
+      URL.revokeObjectURL(enhancedUrl);
+    }
     setEnhancedUrl(null);
     setMode("2x");
+    setStatusMessage(null);
   }
 
   return (
     <section className={variant === "light" ? "space-y-6" : "space-y-6"}>
       {showUsageCounter ? (
         <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.06)] sm:p-6">
-          <p className="text-sm text-slate-500">Daily usage is shown in your dashboard.</p>
+          <p className="text-sm text-slate-500">Enhancement runs locally in your browser.</p>
         </div>
       ) : null}
 
@@ -158,7 +157,7 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
               }
             >
               <Spinner size="md" color="#3B82F6" />
-              <span>Enhancing your image...</span>
+              <span>{statusMessage ?? "Enhancing your image..."}</span>
             </div>
           ) : null}
 

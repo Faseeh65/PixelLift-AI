@@ -71,6 +71,9 @@ export default function HomePage() {
               </div>
 
               <div className="w-full pt-6 sm:pt-8">
+                <p className="mb-4 text-center text-sm text-slate-500 sm:text-base">
+                  Runs locally in your browser with ONNX Runtime Web.
+                </p>
                 <EnhancementTool showUsageCounter={false} variant="light" />
               </div>
 

@@ -27,7 +27,7 @@ export function UploadZone({
   disabled = false,
   variant = "dark",
   actionLabel = "Insert Image",
-  helperText = "or click the button below to insert an image",
+  helperText = "or click the button below to insert an image locally",
 }: UploadZoneProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
