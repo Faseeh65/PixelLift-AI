@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient as createSupabaseServerClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkUsageLimit, incrementUsage } from "@/lib/usage";
-import { enhanceImage } from "@/lib/replicate";
+import { enhanceImage, ReplicateEnhancementError } from "@/lib/replicate";
 import { getClientIP } from "@/lib/utils";
 import type { EnhancementMode } from "@/types";
 
@@ -141,6 +141,14 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("[api/enhance] error:", error);
+
+    if (error instanceof ReplicateEnhancementError) {
+      return NextResponse.json(
+        { success: false, error: error.message },
+        { status: error.statusCode }
+      );
+    }
+
     return NextResponse.json(
       { success: false, error: "Enhancement failed. Please try again." },
       { status: 500 }

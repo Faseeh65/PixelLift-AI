@@ -3,6 +3,16 @@ import type { EnhancementMode } from "@/types";
 
 type PredictionStatus = "starting" | "processing" | "succeeded" | "failed" | "canceled" | "aborted";
 
+export class ReplicateEnhancementError extends Error {
+  statusCode: number;
+
+  constructor(message: string, statusCode = 500) {
+    super(message);
+    this.name = "ReplicateEnhancementError";
+    this.statusCode = statusCode;
+  }
+}
+
 function getScale(mode: EnhancementMode): number {
   if (mode === "4x") {
     return 4;
@@ -91,6 +101,18 @@ export async function enhanceImage(
     throw new Error("Replicate prediction timed out.");
   } catch (error) {
     console.error("[replicate] enhanceImage error:", error);
-    throw new Error("Enhancement failed. Please try again.");
+
+    const candidate = error as { status?: number; message?: string; response?: { status?: number } };
+    const statusCode = candidate.status ?? candidate.response?.status;
+    const message = String(candidate.message ?? "");
+
+    if (statusCode === 402 || message.toLowerCase().includes("insufficient credit")) {
+      throw new ReplicateEnhancementError(
+        "Image enhancement is temporarily unavailable because Replicate billing credit is exhausted.",
+        402
+      );
+    }
+
+    throw new ReplicateEnhancementError("Enhancement failed. Please try again.", 500);
   }
 }
