@@ -12,6 +12,7 @@ export async function createClient(): Promise<SupabaseClient> {
 
   const cookieStore = await cookies();
 
+  // This server wrapper keeps SSR auth in sync with the request cookies.
   return createServerClient(url, anonKey, {
     cookies: {
       getAll() {

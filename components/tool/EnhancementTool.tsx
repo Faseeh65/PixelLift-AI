@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { Download, RefreshCw } from "lucide-react";
 import type { EnhancementMode } from "@/types";
@@ -124,6 +123,7 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
           <UploadZone
             disabled={isLoading}
             variant={variant}
+            actionLabel="Insert Image"
             onFileSelected={(file) => {
               setSelectedFile(file);
               setEnhancedUrl(null);
@@ -184,7 +184,7 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
                   : "rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5 text-sm text-slate-500"
               }
             >
-              Upload an image to start. Need help deciding? <Link className="text-[#3B82F6]" href="/blog">Browse the blog</Link> or learn how the tool works.
+              Insert an image to start. The tool will upscale it after you choose a file.
             </div>
           )}
         </div>

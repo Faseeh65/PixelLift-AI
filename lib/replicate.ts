@@ -56,6 +56,7 @@ export async function enhanceImage(
     }
 
     const replicate = new Replicate({ auth: token });
+    // Replicate expects a URL or data URI, so we keep the binary upload server-side.
     const imageDataUri = `data:${mimeType};base64,${imageBase64}`;
     const prediction = (await replicate.predictions.create({
       model: "nightmareai/real-esrgan",
@@ -70,6 +71,7 @@ export async function enhanceImage(
       error?: unknown;
     };
 
+    // Real-ESRGAN can cold start, so poll long enough for the first request.
     const deadline = Date.now() + 25000;
     let currentPrediction = prediction;
 

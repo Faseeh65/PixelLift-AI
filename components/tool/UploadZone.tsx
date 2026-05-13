@@ -5,11 +5,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, FileImage } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/Button";
 
 interface UploadZoneProps {
   onFileSelected: (file: File) => void;
   disabled?: boolean;
   variant?: "dark" | "light";
+  actionLabel?: string;
+  helperText?: string;
 }
 
 const maxSizeBytes = 5 * 1024 * 1024;
@@ -23,6 +26,8 @@ export function UploadZone({
   onFileSelected,
   disabled = false,
   variant = "dark",
+  actionLabel = "Insert Image",
+  helperText = "or click the button below to insert an image",
 }: UploadZoneProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +40,7 @@ export function UploadZone({
     return URL.createObjectURL(selectedFile);
   }, [selectedFile]);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     accept: acceptedTypes,
     maxSize: maxSizeBytes,
     multiple: false,
@@ -117,14 +122,20 @@ export function UploadZone({
             >
               {isDragActive ? "Drop your image here" : "Drag & drop your image here"}
             </p>
-            <p className={cn("mt-1 text-sm", "text-slate-600")}>
-              or click the button below to browse
-            </p>
+          <p className={cn("mt-1 text-sm", "text-slate-600")}>
+            {helperText}
+          </p>
           </div>
           <p className={cn("text-sm", "text-slate-400")}>
             Supports JPG, PNG, and WEBP up to 5MB
           </p>
         </div>
+      </div>
+
+      <div className="flex justify-center">
+        <Button size="lg" onClick={() => open()} disabled={disabled} className="min-w-44">
+          {actionLabel}
+        </Button>
       </div>
 
       {error ? <p className="text-sm text-[#EF4444]">{error}</p> : null}

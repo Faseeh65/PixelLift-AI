@@ -12,6 +12,7 @@ export async function getUsageSummary(
   try {
     const supabase = createAdminClient();
     const limit = getLimit(idType);
+    // Usage resets by UTC date so anonymous and logged-in limits stay predictable.
     const today = new Date().toISOString().slice(0, 10);
 
     const { data, error } = await supabase
@@ -67,6 +68,7 @@ export async function incrementUsage(
 ): Promise<void> {
   try {
     const supabase = createAdminClient();
+    // Upsert keeps the daily counter idempotent for repeated enhancement requests.
     const today = new Date().toISOString().slice(0, 10);
 
     const { error } = await supabase.from("usage_logs").upsert(

@@ -54,6 +54,7 @@ export async function POST(request: NextRequest) {
     const fileEntry = formData.get("image");
     const mode = parseMode(formData.get("mode"));
 
+    // Server-side validation is mandatory because client-side file checks can be bypassed.
     if (!(fileEntry instanceof File)) {
       return NextResponse.json(
         { success: false, error: "Invalid file type. Please upload JPG, PNG, or WEBP." },
@@ -98,6 +99,7 @@ export async function POST(request: NextRequest) {
     const identifier = user ? user.id : getClientIP(request);
     const idType = isAuthenticated ? "user" : "ip";
 
+    // Anonymous users are limited by IP; authenticated users are limited by user ID.
     const usageLimit = await checkUsageLimit(identifier, idType);
     if (!usageLimit.allowed) {
       return NextResponse.json(
@@ -111,6 +113,7 @@ export async function POST(request: NextRequest) {
     }
 
     const imageBase64 = Buffer.from(arrayBuffer).toString("base64");
+    // Replicate runs only here so the API token never leaves the server.
     const enhancedUrl = await enhanceImage(imageBase64, mode, fileEntry.type);
     await incrementUsage(identifier, idType);
 

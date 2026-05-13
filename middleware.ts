@@ -22,6 +22,7 @@ export async function middleware(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
+          // Preserve Supabase auth cookies across the request/response boundary.
           cookiesToSet.forEach(({ name, value, options }) => {
             response.cookies.set(name, value, options);
           });
@@ -31,6 +32,7 @@ export async function middleware(request: NextRequest) {
 
     const { data } = await supabase.auth.getUser();
 
+    // Dashboard access is protected at the edge so unauthenticated users bounce early.
     if (request.nextUrl.pathname.startsWith("/dashboard") && !data.user) {
       return NextResponse.redirect(new URL("/", request.url));
     }

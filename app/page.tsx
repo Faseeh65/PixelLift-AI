@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { ArrowRight, ShieldCheck, Sparkles, Zap, Upload } from "lucide-react";
+import { ShieldCheck, Sparkles, Zap } from "lucide-react";
+import { EnhancementTool } from "@/components/tool/EnhancementTool";
 
 export const revalidate = 86400;
 
@@ -71,27 +71,7 @@ export default function HomePage() {
               </div>
 
               <div className="w-full pt-6 sm:pt-8">
-                <div className="mx-auto max-w-4xl rounded-[2rem] border border-dashed border-slate-300 bg-slate-50 p-6 sm:p-10">
-                  <div className="mx-auto flex max-w-xl flex-col items-center text-center">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-slate-200 text-slate-500">
-                      <Upload className="h-9 w-9" />
-                    </div>
-                    <h2 className="mt-8 text-xl font-semibold text-slate-900 sm:text-2xl">
-                      Drag &amp; drop your image here
-                    </h2>
-                    <p className="mt-3 text-sm text-slate-500 sm:text-base">or click the button below to browse</p>
-                    <p className="mt-5 text-sm text-slate-400">Supports JPG, PNG, and WEBP up to 10MB</p>
-                    <div className="mt-8">
-                      <Link
-                        href="/blog"
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
-                      >
-                        Browse Blog
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                <EnhancementTool showUsageCounter={false} variant="light" />
               </div>
 
               <div id="how-it-works" className="w-full pt-6">

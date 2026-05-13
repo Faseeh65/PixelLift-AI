@@ -9,6 +9,7 @@ export function createAdminClient(): SupabaseClient {
     throw new Error("Missing Supabase admin environment variables.");
   }
 
+  // The service role key must stay server-side because it bypasses RLS.
   return createSupabaseClient(url, serviceRoleKey, {
     auth: {
       autoRefreshToken: false,
