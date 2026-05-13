@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
 
     // Dashboard access is protected at the edge so unauthenticated users bounce early.
     if (request.nextUrl.pathname.startsWith("/dashboard") && !data.user) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/auth/login", request.url));
     }
 
     return response;
