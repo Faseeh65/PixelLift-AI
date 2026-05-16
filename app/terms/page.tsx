@@ -12,7 +12,7 @@ const sections = [
     title: "1. About PixelLift AI",
     body: [
       "PixelLift AI is an AI-powered image enhancement web application and AI blog platform. It allows users to upload images, enhance them using AI, preview before-and-after results, download enhanced images, create accounts, view enhancement history, and read AI-related tutorials or blog content.",
-      "According to the current project version, PixelLift AI supports image enhancement features such as 2x upscale, 4x upscale, denoise, and sharpen. The service processes images using Replicate API and the Real-ESRGAN model.",
+      "According to the current project version, PixelLift AI supports image enhancement features such as 2x upscale, 4x upscale, denoise, and sharpen. The service processes images using the Picsart API.",
     ],
   },
   {
@@ -41,7 +41,7 @@ const sections = [
       "The maximum file size is 5MB.",
       "We may validate the file type and file size.",
       "We may check whether you have remaining daily usage.",
-      "We may send the image to Replicate API for enhancement.",
+      "We may send the image to Picsart API for enhancement.",
       "We may return an enhanced image URL and store enhancement history if you are logged in.",
     ],
   },
@@ -129,7 +129,7 @@ const sections = [
     bullets: [
       "Vercel for hosting and serverless functions.",
       "Supabase for authentication, database, usage logs, and user profiles.",
-      "Replicate API for AI image processing.",
+      "Picsart API for AI image processing.",
       "Google OAuth for login.",
       "Google AdSense for blog ads.",
     ],

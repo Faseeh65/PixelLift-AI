@@ -10,9 +10,9 @@ const securityHeaders = [
       "default-src 'self'",
       "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://pagead2.googlesyndication.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "img-src 'self' data: blob: https://replicate.delivery https://*.supabase.co https://lh3.googleusercontent.com",
+      "img-src 'self' data: blob: https://*.supabase.co https://lh3.googleusercontent.com https://*.picsart.com https://*.picsart.io",
       "font-src 'self' https://fonts.gstatic.com",
-      "connect-src 'self' https://*.supabase.co https://api.replicate.com https://huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs.hf.co https://cdn.jsdelivr.net",
+      "connect-src 'self' https://*.supabase.co https://cdn.jsdelivr.net https://*.picsart.com https://*.picsart.io",
       "worker-src 'self' blob:",
       "frame-src https://googleads.g.doubleclick.net",
     ].join("; "),
@@ -23,9 +23,10 @@ const securityHeaders = [
 const nextConfig = {
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "replicate.delivery" },
       { protocol: "https", hostname: "*.supabase.co" },
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
+      { protocol: "https", hostname: "*.picsart.com" },
+      { protocol: "https", hostname: "*.picsart.io" },
     ],
   },
   pageExtensions: ["ts", "tsx", "mdx"],

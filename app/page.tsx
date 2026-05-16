@@ -22,8 +22,8 @@ const features = [
     accent: "bg-violet-100 text-violet-600",
   },
   {
-    title: "100% Private",
-    description: "Your images, your privacy",
+    title: "Secure Processing",
+    description: "Images are processed through the enhancement backend",
     icon: ShieldCheck,
     accent: "bg-emerald-100 text-emerald-600",
   },
@@ -72,7 +72,7 @@ export default function HomePage() {
 
               <div className="w-full pt-6 sm:pt-8">
                 <p className="mb-4 text-center text-sm text-slate-500 sm:text-base">
-                  Runs locally in your browser with ONNX Runtime Web.
+                  Runs through the PixelLift enhancement engine.
                 </p>
                 <EnhancementTool showUsageCounter={false} variant="light" />
               </div>

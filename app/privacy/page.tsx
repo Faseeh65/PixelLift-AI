@@ -43,13 +43,13 @@ const sections = [
     title: "4. AI Image Processing",
     body: [
       "PixelLift AI processes uploaded images through its backend server before sending them to the AI processing provider.",
-      "The documented system uses Next.js API routes, Replicate API, Real-ESRGAN, Vercel serverless functions, and Supabase for authentication, database, and usage tracking.",
+      "The documented system uses Next.js API routes, Picsart API, Vercel serverless functions, and Supabase for authentication, database, and usage tracking.",
     ],
     bullets: [
       "When you upload an image, the file is validated and checked against your usage limit.",
-      "The image is then sent to Replicate for AI enhancement.",
+      "The image is then sent to Picsart for AI enhancement.",
       "The enhanced image URL is returned to the frontend for preview and download.",
-      "Temporary image URLs may expire after approximately 24 hours.",
+      "Enhanced image URLs may be temporary depending on the provider response.",
       "PixelLift AI does not train custom AI models in version 1.0.",
     ],
   },
@@ -70,7 +70,7 @@ const sections = [
     bullets: [
       "Vercel: hosting, request logs, function logs, and performance logs.",
       "Supabase: authentication, user accounts, database storage, usage logs, enhancement history, and Row Level Security.",
-      "Replicate: AI image processing using the Real-ESRGAN model.",
+      "Picsart: AI image processing using the Upscale API.",
       "Google AdSense: ads on blog pages, depending on consent and regional law.",
       "Google OAuth: account creation and login if you choose Google sign-in.",
     ],
@@ -81,7 +81,7 @@ const sections = [
       "Account profiles are kept until the user deletes their account.",
       "Enhancement history is planned to be kept for the last 30 days per user.",
       "Usage logs are planned to be purged after 7 days.",
-      "Temporary Replicate URLs may expire after approximately 24 hours.",
+      "Temporary provider URLs may expire after approximately 24 hours.",
       "Anonymous usage data may be stored temporarily to enforce daily limits and prevent abuse.",
     ],
   },
@@ -89,7 +89,7 @@ const sections = [
     title: "8. Data Security",
     bullets: [
       "API keys are kept server-side only.",
-      "Replicate API token is never exposed to frontend code.",
+      "Picsart API key is never exposed to frontend code.",
       "Supabase service role key is server-side only.",
       "Uploaded images are validated server-side.",
       "File type and file size checks are enforced.",

@@ -70,13 +70,14 @@ export async function incrementUsage(
     const supabase = createAdminClient();
     // Upsert keeps the daily counter idempotent for repeated enhancement requests.
     const today = new Date().toISOString().slice(0, 10);
+    const summary = await getUsageSummary(identifier, idType);
 
     const { error } = await supabase.from("usage_logs").upsert(
       {
         identifier,
         id_type: idType,
         usage_date: today,
-        count: 1,
+        count: summary.used + 1,
         updated_at: new Date().toISOString(),
       },
       { onConflict: "identifier,usage_date" }

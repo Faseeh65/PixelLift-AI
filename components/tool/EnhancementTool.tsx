@@ -9,11 +9,17 @@ import { toast } from "@/components/ui/Toast";
 import { UploadZone } from "@/components/tool/UploadZone";
 import { ModeSelector } from "@/components/tool/ModeSelector";
 import { ComparisonSlider } from "@/components/tool/ComparisonSlider";
-import { BrowserEnhancementError, enhanceImageInBrowser } from "@/lib/browser-enhance";
 
 interface EnhancementToolProps {
   showUsageCounter?: boolean;
   variant?: "dark" | "light";
+}
+
+interface EnhanceApiResponse {
+  success: boolean;
+  enhancedUrl?: string;
+  remainingToday?: number;
+  error?: string;
 }
 
 export function EnhancementTool({ showUsageCounter = true, variant = "light" }: EnhancementToolProps) {
@@ -54,23 +60,43 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
 
     try {
       setIsLoading(true);
-      setStatusMessage("Preparing browser model...");
+      setStatusMessage("Preparing enhancement engine...");
       if (enhancedUrl?.startsWith("blob:")) {
         URL.revokeObjectURL(enhancedUrl);
       }
 
-      const result = await enhanceImageInBrowser(selectedFile, mode, setStatusMessage);
-      setEnhancedUrl(result.url);
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("mode", mode);
+
+      setStatusMessage("Sending image to enhancement engine...");
+      const response = await fetch("/api/enhance", {
+        method: "POST",
+        body: formData,
+      });
+
+      const payload = (await response.json().catch(() => null)) as EnhanceApiResponse | null;
+      if (!response.ok || !payload?.success || !payload.enhancedUrl) {
+        throw new Error(payload?.error ?? "Enhancement failed.");
+      }
+
+      try {
+        const imageResponse = await fetch(payload.enhancedUrl);
+        if (imageResponse.ok) {
+          const blob = await imageResponse.blob();
+          setEnhancedUrl(URL.createObjectURL(blob));
+        } else {
+          setEnhancedUrl(payload.enhancedUrl);
+        }
+      } catch {
+        setEnhancedUrl(payload.enhancedUrl);
+      }
       const modeLabel =
         mode === "denoise" ? "denoised" : mode === "4x" ? "4x enhanced" : "2x enhanced";
       toast.success(`Your image is ready and ${modeLabel}.`);
     } catch (error) {
       console.error("[enhancement-tool] error:", error);
-      if (error instanceof BrowserEnhancementError) {
-        toast.error(error.message);
-      } else {
-        toast.error(error instanceof Error ? error.message : "Enhancement failed.");
-      }
+      toast.error(error instanceof Error ? error.message : "Enhancement failed.");
     } finally {
       setIsLoading(false);
       setStatusMessage(null);
@@ -83,9 +109,29 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
     }
 
     try {
+      if (!enhancedUrl.startsWith("blob:")) {
+        try {
+          const response = await fetch(enhancedUrl);
+          if (response.ok) {
+            const blob = await response.blob();
+            const objectUrl = URL.createObjectURL(blob);
+            const anchor = document.createElement("a");
+            anchor.href = objectUrl;
+            anchor.download = `pixellift-enhanced-${Date.now()}.png`;
+            anchor.click();
+            URL.revokeObjectURL(objectUrl);
+            return;
+          }
+        } catch {
+          // Fall back to opening the remote image URL.
+        }
+      }
+
       const anchor = document.createElement("a");
       anchor.href = enhancedUrl;
       anchor.download = `pixellift-enhanced-${Date.now()}.png`;
+      anchor.target = "_blank";
+      anchor.rel = "noreferrer";
       anchor.click();
     } catch (error) {
       console.error("[enhancement-tool] download error:", error);
@@ -107,7 +153,7 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
     <section className={variant === "light" ? "space-y-6" : "space-y-6"}>
       {showUsageCounter ? (
         <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.06)] sm:p-6">
-          <p className="text-sm text-slate-500">Enhancement runs locally in your browser.</p>
+          <p className="text-sm text-slate-500">Enhancement runs through the Picsart-backed server engine.</p>
         </div>
       ) : null}
 
@@ -128,6 +174,10 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
               setEnhancedUrl(null);
             }}
           />
+
+          <p className="text-xs leading-5 text-slate-500">
+            For best results, upload clear images under 5MB. Very large-resolution images may fail depending on provider limits.
+          </p>
 
           <div className="space-y-3">
             <p className="text-sm font-medium text-slate-600">

@@ -48,7 +48,7 @@ const sections = [
     bullets: [
       "Vercel",
       "Supabase",
-      "Replicate",
+      "Picsart",
       "Google OAuth",
       "Google AdSense",
       "Other infrastructure or analytics providers",
