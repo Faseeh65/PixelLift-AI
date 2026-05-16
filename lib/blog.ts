@@ -7,17 +7,49 @@ import type { BlogPost, BlogPostMeta } from "@/types";
 
 const blogDir = path.join(process.cwd(), "content", "blog");
 
+interface BlogFrontmatter {
+  slug?: string;
+  title?: string;
+  description?: string;
+  date?: string;
+  author?: string;
+  category?: string;
+  tags?: string[] | string;
+  readingTime?: string;
+  coverImage?: string;
+}
+
+function toStringArray(value: string[] | string | undefined): string[] {
+  if (Array.isArray(value)) {
+    return value.map((item) => item.trim()).filter(Boolean);
+  }
+
+  if (typeof value === "string") {
+    return value
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  return [];
+}
+
 async function readPostFile(fileName: string): Promise<BlogPost | null> {
   try {
     const filePath = path.join(blogDir, fileName);
     const file = await readFile(filePath, "utf8");
     const parsed = matter(file);
-    const slug = fileName.replace(/\.mdx?$/i, "");
-    const meta = parsed.data as Record<string, string | string[] | undefined>;
+    const meta = parsed.data as BlogFrontmatter;
+    const slug = typeof meta.slug === "string" && meta.slug.trim().length > 0
+      ? meta.slug.trim()
+      : fileName.replace(/\.mdx?$/i, "");
     const computedReadingTime =
       typeof meta.readingTime === "string" && meta.readingTime.trim().length > 0
         ? meta.readingTime
         : readingTime(parsed.content).text;
+    const coverImage = typeof meta.coverImage === "string" && meta.coverImage.trim().length > 0
+      ? meta.coverImage.trim()
+      : undefined;
 
     return {
       slug,
@@ -26,9 +58,9 @@ async function readPostFile(fileName: string): Promise<BlogPost | null> {
       date: String(meta.date ?? new Date().toISOString()),
       author: String(meta.author ?? "PixelLift Team"),
       category: String(meta.category ?? "General"),
-      tags: Array.isArray(meta.tags) ? meta.tags.map(String) : undefined,
+      tags: toStringArray(meta.tags),
       readingTime: computedReadingTime,
-      coverImage: String(meta.coverImage ?? "/images/blog/getting-started-with-ai-image-upscaling.svg"),
+      coverImage,
       body: parsed.content,
     };
   } catch (error) {

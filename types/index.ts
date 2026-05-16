@@ -37,9 +37,9 @@ export interface BlogPostMeta {
   date: string;
   author: string;
   category: string;
-  tags?: string[];
+  tags: string[];
   readingTime: string;
-  coverImage: string;
+  coverImage?: string;
 }
 
 export interface BlogPost extends BlogPostMeta {
