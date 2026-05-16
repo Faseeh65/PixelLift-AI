@@ -53,27 +53,28 @@ export default async function BlogPostPage({ params }: PageParams) {
   const relatedPosts = allPosts.filter((entry) => entry.category === post.category && entry.slug !== post.slug).slice(0, 3);
 
   return (
-    <article className="bg-slate-950 text-slate-100">
-      <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <article className="relative overflow-hidden bg-[#F8FAFC] text-slate-900">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[22rem] bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.10),transparent_45%)]" />
+      <div className="relative mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <header className="space-y-5">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-200">
+            <span className="inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
               {post.category}
             </span>
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs font-medium text-slate-300"
+                className="inline-flex rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-sm"
               >
                 {tag}
               </span>
             ))}
           </div>
-          <h1 className="text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+          <h1 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
             {post.title}
           </h1>
-          <p className="max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">{post.description}</p>
-          <div className="flex flex-wrap gap-3 text-sm text-slate-400">
+          <p className="max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">{post.description}</p>
+          <div className="flex flex-wrap gap-3 text-sm text-slate-500">
             <span>{post.author}</span>
             <span>|</span>
             <span>{formatDate(post.date)}</span>
@@ -86,30 +87,30 @@ export default async function BlogPostPage({ params }: PageParams) {
           <AdSlot slot="blog-top" format="leaderboard" />
         </div>
 
-        <div className="mt-8 overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-900/80 shadow-[0_24px_80px_rgba(2,6,23,0.35)]">
+        <div className="mt-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.06)]">
           {post.coverImage ? (
-            <div className="relative aspect-[16/9] border-b border-slate-800">
+            <div className="relative aspect-[16/9] border-b border-slate-200">
               <Image src={post.coverImage} alt={post.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 896px" />
             </div>
           ) : (
-            <div className="flex aspect-[16/9] items-end border-b border-slate-800 bg-gradient-to-br from-blue-500/20 via-cyan-500/10 to-indigo-500/20 p-6">
+            <div className="flex aspect-[16/9] items-end border-b border-slate-200 bg-gradient-to-br from-blue-50 via-white to-cyan-50 p-6">
               <div className="max-w-xl space-y-3">
-                <div className="h-2 w-28 rounded-full bg-white/20" />
-                <div className="h-2 w-40 rounded-full bg-white/15" />
-                <div className="h-2 w-20 rounded-full bg-white/10" />
+                <div className="h-2 w-28 rounded-full bg-slate-200" />
+                <div className="h-2 w-40 rounded-full bg-slate-100" />
+                <div className="h-2 w-20 rounded-full bg-slate-100" />
               </div>
             </div>
           )}
           <div className="px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-            <div className="space-y-6 break-words text-slate-300">
+            <div className="space-y-6 break-words text-slate-700">
               <ReactMarkdown
                 components={{
-                  h1: ({ children }) => <h2 className="text-3xl font-bold tracking-tight text-white">{children}</h2>,
-                  h2: ({ children }) => <h3 className="text-2xl font-bold tracking-tight text-white">{children}</h3>,
-                  h3: ({ children }) => <h4 className="text-xl font-semibold tracking-tight text-white">{children}</h4>,
-                  p: ({ children }) => <p className="leading-8 text-slate-300">{children}</p>,
+                  h1: ({ children }) => <h2 className="text-3xl font-bold tracking-tight text-slate-900">{children}</h2>,
+                  h2: ({ children }) => <h3 className="text-2xl font-bold tracking-tight text-slate-900">{children}</h3>,
+                  h3: ({ children }) => <h4 className="text-xl font-semibold tracking-tight text-slate-900">{children}</h4>,
+                  p: ({ children }) => <p className="leading-8 text-slate-700">{children}</p>,
                   a: ({ children, href }) => (
-                    <a href={href} className="break-words text-cyan-300 underline underline-offset-4">
+                    <a href={href} className="break-words text-blue-600 underline underline-offset-4">
                       {children}
                     </a>
                   ),
@@ -117,19 +118,19 @@ export default async function BlogPostPage({ params }: PageParams) {
                   ol: ({ children }) => <ol className="list-decimal space-y-2 pl-6">{children}</ol>,
                   li: ({ children }) => <li className="leading-7">{children}</li>,
                   blockquote: ({ children }) => (
-                    <blockquote className="border-l-4 border-cyan-400 pl-4 italic text-slate-300">
+                    <blockquote className="border-l-4 border-blue-500 pl-4 italic text-slate-600">
                       {children}
                     </blockquote>
                   ),
                   pre: ({ children }) => (
-                    <pre className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950 p-4 text-sm leading-7 text-slate-100">
+                    <pre className="overflow-x-auto rounded-2xl border border-slate-200 bg-slate-950 p-4 text-sm leading-7 text-slate-100">
                       {children}
                     </pre>
                   ),
                   code: ({ children, className }) => (
                     <code
                       className={cn(
-                        "rounded bg-slate-800 px-1.5 py-0.5 text-[0.95em] text-slate-100",
+                        "rounded bg-slate-100 px-1.5 py-0.5 text-[0.95em] text-slate-900",
                         className
                       )}
                     >
@@ -142,12 +143,12 @@ export default async function BlogPostPage({ params }: PageParams) {
                     </div>
                   ),
                   th: ({ children }) => (
-                    <th className="border-b border-slate-700 px-3 py-2 font-semibold text-slate-100">
+                    <th className="border-b border-slate-200 px-3 py-2 font-semibold text-slate-900">
                       {children}
                     </th>
                   ),
                   td: ({ children }) => (
-                    <td className="border-b border-slate-800 px-3 py-2 align-top text-slate-300">{children}</td>
+                    <td className="border-b border-slate-100 px-3 py-2 align-top text-slate-700">{children}</td>
                   ),
                   img: ({ alt, src }) => (
                     /* eslint-disable-next-line @next/next/no-img-element */
@@ -171,8 +172,8 @@ export default async function BlogPostPage({ params }: PageParams) {
           <AdSlot slot="blog-mid" format="rectangle" />
         </div>
 
-        <section className="mt-12 rounded-[2rem] border border-slate-800 bg-slate-900/80 p-5 shadow-[0_24px_80px_rgba(2,6,23,0.35)] sm:p-6">
-          <h2 className="text-2xl font-bold tracking-tight text-white">Related Posts</h2>
+        <section className="mt-12 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.06)] sm:p-6">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Related Posts</h2>
           <div className="mt-6 grid gap-6 md:grid-cols-3">
             {relatedPosts.map((related) => (
               <BlogCard key={related.slug} post={related} />

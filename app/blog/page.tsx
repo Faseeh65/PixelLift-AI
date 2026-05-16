@@ -34,14 +34,15 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const visiblePosts = posts.slice((page - 1) * perPage, page * perPage);
 
   return (
-    <section className="bg-slate-950 text-slate-100">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <section className="relative overflow-hidden bg-[#F8FAFC] text-slate-900">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[24rem] bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.10),transparent_45%)]" />
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <header className="space-y-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">PixelLift AI Blog</p>
-          <h1 className="max-w-3xl text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-blue-600">PixelLift AI Blog</p>
+          <h1 className="max-w-3xl text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
             AI Image Enhancement Blog
           </h1>
-          <p className="max-w-3xl text-sm leading-7 text-slate-300 sm:text-base sm:leading-8">
+          <p className="max-w-3xl text-sm leading-7 text-slate-600 sm:text-base sm:leading-8">
             Practical guides on upscaling, repairing blurry photos, choosing file formats, and improving images for
             web, social, and ecommerce use.
           </p>
@@ -57,18 +58,18 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-3 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
             Page {page} of {totalPages} | {total} posts total
           </p>
           <div className="flex gap-3 sm:justify-end">
             {page > 1 ? (
-              <a className="text-cyan-300 hover:text-cyan-200" href={`/blog?page=${page - 1}`}>
+              <a className="text-blue-600 hover:text-blue-700" href={`/blog?page=${page - 1}`}>
                 Previous
               </a>
             ) : null}
             {page < totalPages ? (
-              <a className="text-cyan-300 hover:text-cyan-200" href={`/blog?page=${page + 1}`}>
+              <a className="text-blue-600 hover:text-blue-700" href={`/blog?page=${page + 1}`}>
                 Next
               </a>
             ) : null}
