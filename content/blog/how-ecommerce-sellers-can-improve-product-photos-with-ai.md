@@ -9,7 +9,6 @@ tags:
   - "product photos"
   - "ecommerce"
   - "listings"
-readingTime: "5 min"
 ---
 
 Product photos do a lot of selling work, so small image problems matter. A soft label, a blurry edge, or a compressed thumbnail can make a listing feel less trustworthy than it should.

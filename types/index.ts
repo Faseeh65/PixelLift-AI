@@ -1,3 +1,5 @@
+import type { Node as MarkdocNode } from "@markdoc/markdoc";
+
 export type EnhancementMode = "2x" | "4x" | "denoise";
 
 export interface User {
@@ -43,7 +45,21 @@ export interface BlogPostMeta {
 }
 
 export interface BlogPost extends BlogPostMeta {
-  body: string;
+  content: MarkdocNode;
+}
+
+export interface KeystaticBlogPostEntry {
+  title: string;
+  slug: string | null;
+  description: string;
+  date: string;
+  author: string;
+  category: string;
+  tags: readonly string[];
+  coverImage: string | null;
+  content: () => Promise<{
+    node: MarkdocNode;
+  }>;
 }
 
 export interface ApiResponse<T> {

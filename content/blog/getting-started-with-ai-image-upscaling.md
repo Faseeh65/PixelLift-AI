@@ -9,7 +9,6 @@ tags:
   - "image upscaling"
   - "quality"
   - "workflow"
-readingTime: "5 min"
 coverImage: "/images/blog/getting-started-with-ai-image-upscaling.svg"
 ---
 

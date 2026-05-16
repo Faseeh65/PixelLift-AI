@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
+import React from "react";
+import Markdoc from "@markdoc/markdoc";
 import { AdSlot } from "@/components/blog/AdSlot";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { cn, formatDate } from "@/lib/utils";
@@ -51,6 +52,49 @@ export default async function BlogPostPage({ params }: PageParams) {
 
   const allPosts = await getAllPosts();
   const relatedPosts = allPosts.filter((entry) => entry.category === post.category && entry.slug !== post.slug).slice(0, 3);
+  const renderable = Markdoc.transform(post.content);
+  const content = Markdoc.renderers.react(renderable, React, {
+    components: {
+      h1: ({ children }) => <h2 className="text-3xl font-bold tracking-tight text-slate-900">{children}</h2>,
+      h2: ({ children }) => <h3 className="text-2xl font-bold tracking-tight text-slate-900">{children}</h3>,
+      h3: ({ children }) => <h4 className="text-xl font-semibold tracking-tight text-slate-900">{children}</h4>,
+      p: ({ children }) => <p className="leading-8 text-slate-700">{children}</p>,
+      a: ({ children, href }) => (
+        <a href={href} className="break-words text-blue-600 underline underline-offset-4">
+          {children}
+        </a>
+      ),
+      ul: ({ children }) => <ul className="list-disc space-y-2 pl-6">{children}</ul>,
+      ol: ({ children }) => <ol className="list-decimal space-y-2 pl-6">{children}</ol>,
+      li: ({ children }) => <li className="leading-7">{children}</li>,
+      blockquote: ({ children }) => (
+        <blockquote className="border-l-4 border-blue-500 pl-4 italic text-slate-600">{children}</blockquote>
+      ),
+      pre: ({ children }) => (
+        <pre className="overflow-x-auto rounded-2xl border border-slate-200 bg-slate-950 p-4 text-sm leading-7 text-slate-100">
+          {children}
+        </pre>
+      ),
+      code: ({ children, className }) => (
+        <code
+          className={cn("rounded bg-slate-100 px-1.5 py-0.5 text-[0.95em] text-slate-900", className)}
+        >
+          {children}
+        </code>
+      ),
+      table: ({ children }) => (
+        <div className="w-full overflow-x-auto">
+          <table className="min-w-full border-collapse text-left text-sm">{children}</table>
+        </div>
+      ),
+      th: ({ children }) => <th className="border-b border-slate-200 px-3 py-2 font-semibold text-slate-900">{children}</th>,
+      td: ({ children }) => <td className="border-b border-slate-100 px-3 py-2 align-top text-slate-700">{children}</td>,
+      img: ({ alt, src }) => (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img alt={alt ?? ""} src={src ?? ""} loading="lazy" decoding="async" className="h-auto max-w-full rounded-2xl" />
+      ),
+    },
+  });
 
   return (
     <article className="relative overflow-hidden bg-[#F8FAFC] text-slate-900">
@@ -90,7 +134,13 @@ export default async function BlogPostPage({ params }: PageParams) {
         <div className="mt-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.06)]">
           {post.coverImage ? (
             <div className="relative aspect-[16/9] border-b border-slate-200">
-              <Image src={post.coverImage} alt={post.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 896px" />
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 896px"
+              />
             </div>
           ) : (
             <div className="flex aspect-[16/9] items-end border-b border-slate-200 bg-gradient-to-br from-blue-50 via-white to-cyan-50 p-6">
@@ -102,69 +152,7 @@ export default async function BlogPostPage({ params }: PageParams) {
             </div>
           )}
           <div className="px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-            <div className="space-y-6 break-words text-slate-700">
-              <ReactMarkdown
-                components={{
-                  h1: ({ children }) => <h2 className="text-3xl font-bold tracking-tight text-slate-900">{children}</h2>,
-                  h2: ({ children }) => <h3 className="text-2xl font-bold tracking-tight text-slate-900">{children}</h3>,
-                  h3: ({ children }) => <h4 className="text-xl font-semibold tracking-tight text-slate-900">{children}</h4>,
-                  p: ({ children }) => <p className="leading-8 text-slate-700">{children}</p>,
-                  a: ({ children, href }) => (
-                    <a href={href} className="break-words text-blue-600 underline underline-offset-4">
-                      {children}
-                    </a>
-                  ),
-                  ul: ({ children }) => <ul className="list-disc space-y-2 pl-6">{children}</ul>,
-                  ol: ({ children }) => <ol className="list-decimal space-y-2 pl-6">{children}</ol>,
-                  li: ({ children }) => <li className="leading-7">{children}</li>,
-                  blockquote: ({ children }) => (
-                    <blockquote className="border-l-4 border-blue-500 pl-4 italic text-slate-600">
-                      {children}
-                    </blockquote>
-                  ),
-                  pre: ({ children }) => (
-                    <pre className="overflow-x-auto rounded-2xl border border-slate-200 bg-slate-950 p-4 text-sm leading-7 text-slate-100">
-                      {children}
-                    </pre>
-                  ),
-                  code: ({ children, className }) => (
-                    <code
-                      className={cn(
-                        "rounded bg-slate-100 px-1.5 py-0.5 text-[0.95em] text-slate-900",
-                        className
-                      )}
-                    >
-                      {children}
-                    </code>
-                  ),
-                  table: ({ children }) => (
-                    <div className="w-full overflow-x-auto">
-                      <table className="min-w-full border-collapse text-left text-sm">{children}</table>
-                    </div>
-                  ),
-                  th: ({ children }) => (
-                    <th className="border-b border-slate-200 px-3 py-2 font-semibold text-slate-900">
-                      {children}
-                    </th>
-                  ),
-                  td: ({ children }) => (
-                    <td className="border-b border-slate-100 px-3 py-2 align-top text-slate-700">{children}</td>
-                  ),
-                  img: ({ alt, src }) => (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      alt={alt ?? ""}
-                      src={src ?? ""}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-auto max-w-full rounded-2xl"
-                    />
-                  ),
-                }}
-              >
-                {post.body}
-              </ReactMarkdown>
-            </div>
+            <div className="space-y-6 break-words text-slate-700">{content}</div>
           </div>
         </div>
 

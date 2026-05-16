@@ -1,6 +1,6 @@
 # PixelLift AI
 
-PixelLift AI is a Next.js app for AI image enhancement plus an MDX blog for tutorials and comparisons.
+PixelLift AI is a Next.js app for AI image enhancement plus a Keystatic-backed static blog for tutorials and comparisons.
 
 ## Requirements
 
@@ -40,5 +40,6 @@ npm run build
 
 - `/dashboard` is protected by middleware.
 - Enhancement requests are handled by the Picsart-backed `/api/enhance` route.
-- Blog posts live in `content/blog`.
+- Blog posts live in `content/blog` and are managed locally through `/keystatic`.
+- Keystatic local mode is intended for local editing, then committing the generated content files to GitHub for Vercel to deploy.
 - AdSense placeholders only render in production on blog pages.

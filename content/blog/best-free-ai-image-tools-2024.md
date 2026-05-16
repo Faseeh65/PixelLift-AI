@@ -9,7 +9,6 @@ tags:
   - "content creators"
   - "social media"
   - "workflow"
-readingTime: "5 min"
 coverImage: "/images/blog/best-free-ai-image-tools-2024.svg"
 ---
 

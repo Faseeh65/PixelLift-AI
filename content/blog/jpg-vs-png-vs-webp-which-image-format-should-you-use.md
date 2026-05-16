@@ -9,7 +9,6 @@ tags:
   - "JPG"
   - "PNG"
   - "WEBP"
-readingTime: "5 min"
 ---
 
 Choosing the right image format can make a bigger difference than many people expect. The best format depends on what matters most: quality, transparency, or file size.

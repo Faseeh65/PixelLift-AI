@@ -10,13 +10,13 @@ interface BlogPageProps {
 }
 
 export const metadata: Metadata = {
-  title: "PixelLift AI Blog - AI Image Enhancement Tips & Tutorials",
+  title: "PixelLift AI Blog — AI Image Enhancement Tips",
   description:
-    "Read practical guides about AI image enhancement, photo upscaling, blurry photo repair, image formats, and visual content optimization.",
+    "Read AI image enhancement tips, photo upscaling guides, blurry photo repair tutorials, and image optimization advice.",
   openGraph: {
-    title: "PixelLift AI Blog - AI Image Enhancement Tips & Tutorials",
+    title: "PixelLift AI Blog — AI Image Enhancement Tips",
     description:
-      "Read practical guides about AI image enhancement, photo upscaling, blurry photo repair, image formats, and visual content optimization.",
+      "Read AI image enhancement tips, photo upscaling guides, blurry photo repair tutorials, and image optimization advice.",
     type: "website",
   },
   alternates: {
@@ -52,11 +52,17 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           <AdSlot slot="blog-header" format="leaderboard" />
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visiblePosts.map((post) => (
-            <BlogCard key={post.slug} post={post} />
-          ))}
-        </div>
+        {visiblePosts.length > 0 ? (
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {visiblePosts.map((post) => (
+              <BlogCard key={post.slug} post={post} />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-10 rounded-[2rem] border border-dashed border-slate-200 bg-white px-6 py-12 text-center text-slate-500 shadow-[0_20px_60px_rgba(15,23,42,0.06)]">
+            No blog posts published yet.
+          </div>
+        )}
 
         <div className="mt-10 flex flex-col gap-3 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>

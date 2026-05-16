@@ -1,96 +1,72 @@
-import { readFile, readdir } from "node:fs/promises";
-import path from "node:path";
-import { cache } from "react";
-import matter from "gray-matter";
+import "server-only";
+
 import readingTime from "reading-time";
-import type { BlogPost, BlogPostMeta } from "@/types";
+import type { Node as MarkdocNode } from "@markdoc/markdoc";
+import type { BlogPost, BlogPostMeta, KeystaticBlogPostEntry } from "@/types";
+import { reader } from "@/lib/keystatic-reader";
 
-const blogDir = path.join(process.cwd(), "content", "blog");
+function extractTextFromNode(node: MarkdocNode): string {
+  const parts: string[] = [];
 
-interface BlogFrontmatter {
-  slug?: string;
-  title?: string;
-  description?: string;
-  date?: string;
-  author?: string;
-  category?: string;
-  tags?: string[] | string;
-  readingTime?: string;
-  coverImage?: string;
+  for (const child of node.walk()) {
+    if (child.type !== "text") {
+      continue;
+    }
+
+    const content = child.attributes.content;
+    if (typeof content === "string" && content.trim().length > 0) {
+      parts.push(content);
+    }
+  }
+
+  return parts.join(" ").replace(/\s+/g, " ").trim();
 }
 
-function toStringArray(value: string[] | string | undefined): string[] {
-  if (Array.isArray(value)) {
-    return value.map((item) => item.trim()).filter(Boolean);
-  }
-
-  if (typeof value === "string") {
-    return value
-      .split(",")
-      .map((item) => item.trim())
-      .filter(Boolean);
-  }
-
-  return [];
+function toMetaFromEntry(slug: string, entry: KeystaticBlogPostEntry): BlogPostMeta {
+  return {
+    slug,
+    title: entry.title,
+    description: entry.description,
+    date: entry.date,
+    author: entry.author,
+    category: entry.category,
+    tags: [...entry.tags],
+    readingTime: "",
+    coverImage: typeof entry.coverImage === "string" && entry.coverImage.trim().length > 0 ? entry.coverImage.trim() : undefined,
+  };
 }
 
-async function readPostFile(fileName: string): Promise<BlogPost | null> {
-  try {
-    const filePath = path.join(blogDir, fileName);
-    const file = await readFile(filePath, "utf8");
-    const parsed = matter(file);
-    const meta = parsed.data as BlogFrontmatter;
-    const slug = typeof meta.slug === "string" && meta.slug.trim().length > 0
-      ? meta.slug.trim()
-      : fileName.replace(/\.mdx?$/i, "");
-    const computedReadingTime =
-      typeof meta.readingTime === "string" && meta.readingTime.trim().length > 0
-        ? meta.readingTime
-        : readingTime(parsed.content).text;
-    const coverImage = typeof meta.coverImage === "string" && meta.coverImage.trim().length > 0
-      ? meta.coverImage.trim()
-      : undefined;
-
-    return {
-      slug,
-      title: String(meta.title ?? slug),
-      description: String(meta.description ?? ""),
-      date: String(meta.date ?? new Date().toISOString()),
-      author: String(meta.author ?? "PixelLift Team"),
-      category: String(meta.category ?? "General"),
-      tags: toStringArray(meta.tags),
-      readingTime: computedReadingTime,
-      coverImage,
-      body: parsed.content,
-    };
-  } catch (error) {
-    console.error("[blog] readPostFile error:", error);
-    return null;
-  }
+async function toPostFromEntry(slug: string, entry: KeystaticBlogPostEntry): Promise<BlogPost> {
+  const content = await entry.content();
+  return {
+    ...toMetaFromEntry(slug, entry),
+    readingTime: readingTime(extractTextFromNode(content.node)).text,
+    content: content.node,
+  };
 }
 
-export const getAllPosts = cache(async (): Promise<BlogPost[]> => {
-  try {
-    const files = await readdir(blogDir);
-    const posts = await Promise.all(files.filter((file) => file.endsWith(".mdx")).map(readPostFile));
-    return posts
-      .filter((post): post is BlogPost => Boolean(post))
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  } catch (error) {
-    console.error("[blog] getAllPosts error:", error);
-    return [];
-  }
-});
+export async function getAllPosts(): Promise<BlogPost[]> {
+  const items = await reader.collections.posts.all();
 
-export const getLatestPosts = cache(async (count: number): Promise<BlogPostMeta[]> => {
+  const posts = await Promise.all(items.map(({ slug, entry }) => toPostFromEntry(slug, entry as KeystaticBlogPostEntry)));
+
+  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export async function getLatestPosts(count: number): Promise<BlogPostMeta[]> {
   const posts = await getAllPosts();
   return posts.slice(0, count).map(toMeta);
-});
+}
 
-export const getPostBySlug = cache(async (slug: string): Promise<BlogPost | null> => {
-  const posts = await getAllPosts();
-  return posts.find((post) => post.slug === slug) ?? null;
-});
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  const entry = await reader.collections.posts.read(slug);
+
+  if (!entry) {
+    return null;
+  }
+
+  return toPostFromEntry(slug, entry as KeystaticBlogPostEntry);
+}
 
 function toMeta(post: BlogPost): BlogPostMeta {
   return {

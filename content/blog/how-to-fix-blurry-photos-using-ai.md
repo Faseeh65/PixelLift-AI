@@ -9,7 +9,6 @@ tags:
   - "blurry photos"
   - "sharpening"
   - "restoration"
-readingTime: "5 min"
 ---
 
 Blurry photos are common, and the cause is not always the same. Some images are blurry because they are too small. Others are soft because of motion, focus issues, or compression. AI can help in many of those cases, but the result depends on the source.

@@ -9,7 +9,6 @@ tags:
   - "AI enhancement"
   - "super-resolution"
   - "image quality"
-readingTime: "6 min"
 coverImage: "/images/blog/real-esrgan-explained-beginners-guide.svg"
 ---
 
