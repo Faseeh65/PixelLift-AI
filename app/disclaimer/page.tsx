@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const revalidate = 86400;
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pixelliftai.online";
 
 export const metadata: Metadata = {
   title: "Disclaimer - PixelLift AI",
@@ -112,11 +113,11 @@ const sections = [
     title: "15. Contact Us",
     body: [
       "PixelLift AI",
-      "Company / Owner: [Company Name]",
-      "Address: [Business Address]",
-      "Jurisdiction: [Jurisdiction]",
-      "Email: [Support Email]",
-      "Website: [Website URL]",
+      "Operator: PixelLift AI",
+      "Address: Not publicly listed.",
+      "Jurisdiction: Not publicly specified.",
+      "Contact: Use the Contact page on the website.",
+      `Website: ${siteUrl}`,
     ],
   },
 ];
@@ -136,8 +137,8 @@ export default function DisclaimerPage() {
             user dashboard, blog, and related services.
           </p>
           <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.06)]">
-            <p className="text-sm text-slate-500">Effective Date: [Effective Date]</p>
-            <p className="mt-1 text-sm text-slate-500">Last Updated: [Last Updated Date]</p>
+            <p className="text-sm text-slate-500">Effective Date: May 18, 2026</p>
+            <p className="mt-1 text-sm text-slate-500">Last Updated: May 18, 2026</p>
           </div>
         </header>
 

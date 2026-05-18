@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const revalidate = 86400;
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pixelliftai.online";
 
 export const metadata: Metadata = {
   title: "Terms of Service - PixelLift AI",
@@ -61,7 +62,7 @@ const sections = [
       "Contain malware, hidden scripts, or harmful files.",
       "Are abusive, exploitative, harassing, hateful, or threatening.",
       "Involve child sexual abuse material or exploitation.",
-      "Violate another person’s privacy.",
+      "Violate another person's privacy.",
       "Are used for fraud, impersonation, deception, or illegal activity.",
     ],
   },
@@ -191,7 +192,7 @@ const sections = [
   {
     title: "24. Copyright Complaints",
     body: [
-      "If you believe that content on PixelLift AI infringes your copyright, contact us at [Support Email] and include your name, contact details, description of the copyrighted work, URL or location of the allegedly infringing content, a statement that you believe the use is unauthorized, a statement that the information you provide is accurate, and your physical or electronic signature.",
+      "If you believe that content on PixelLift AI infringes your copyright, use the Contact page on the website and include your name, contact details, description of the copyrighted work, URL or location of the allegedly infringing content, a statement that you believe the use is unauthorized, a statement that the information you provide is accurate, and your physical or electronic signature.",
     ],
   },
   {
@@ -215,19 +216,19 @@ const sections = [
   {
     title: "28. Governing Law",
     body: [
-      "These Terms are governed by the laws of [Jurisdiction], without regard to conflict of law principles.",
-      "Any disputes will be handled in the courts or dispute resolution forums located in [Jurisdiction], unless applicable law requires otherwise.",
+      "These Terms are governed by the laws of the jurisdiction where the website operator is based, without regard to conflict of law principles.",
+      "Any disputes will be handled in the courts or dispute resolution forums located in the jurisdiction where the website operator is based, unless applicable law requires otherwise.",
     ],
   },
   {
     title: "29. Contact Information",
     body: [
       "PixelLift AI",
-      "Company / Owner: [Company Name]",
-      "Address: [Business Address]",
-      "Jurisdiction: [Jurisdiction]",
-      "Email: [Support Email]",
-      "Website: [Website URL]",
+      "Operator: PixelLift AI",
+      "Address: Not publicly listed.",
+      "Jurisdiction: Not publicly specified.",
+      "Contact: Use the Contact page on the website.",
+      `Website: ${siteUrl}`,
     ],
   },
 ];
@@ -247,8 +248,8 @@ export default function TermsPage() {
             enhancement tool, user accounts, dashboard, blog, and related services.
           </p>
           <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.06)]">
-            <p className="text-sm text-slate-500">Effective Date: [Effective Date]</p>
-            <p className="mt-1 text-sm text-slate-500">Last Updated: [Last Updated Date]</p>
+            <p className="text-sm text-slate-500">Effective Date: May 18, 2026</p>
+            <p className="mt-1 text-sm text-slate-500">Last Updated: May 18, 2026</p>
           </div>
         </header>
 

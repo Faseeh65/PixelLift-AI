@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const revalidate = 86400;
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pixelliftai.online";
 
 export const metadata: Metadata = {
   title: "Privacy Policy - PixelLift AI",
@@ -12,11 +13,11 @@ const sections = [
     title: "1. Who We Are",
     body: [
       "PixelLift AI is an online AI image enhancement platform designed to help users upscale, denoise, sharpen, and enhance images quickly. The service also includes an AI blog and tutorial section.",
-      "Website: [Website URL]",
-      "Company / Owner: [Company Name]",
-      "Business Address: [Business Address]",
-      "Contact Email: [Support Email]",
-      "Jurisdiction: [Jurisdiction]",
+      `Website: ${siteUrl}`,
+      "Operator: PixelLift AI",
+      "Business Address: Not publicly listed.",
+      "Contact: Use the Contact page on the website.",
+      "Jurisdiction: Not publicly specified.",
     ],
   },
   {
@@ -31,6 +32,7 @@ const sections = [
       "Enhancement history for logged-in users, including original URL, enhanced URL, enhancement mode, file size, status, and error message.",
       "Device, log, and technical information such as browser type, device type, OS, referrer, pages visited, performance data, and security logs.",
       "Cookies and similar technologies for authentication, preferences, analytics, and AdSense on blog pages.",
+      "If Google AdSense is enabled, Google and its partners may use cookies, device identifiers, and similar technologies to serve and measure ads based on your visits to this site and other websites.",
     ],
   },
   {
@@ -66,6 +68,7 @@ const sections = [
     title: "6. Data Sharing and Third-Party Services",
     body: [
       "We do not sell your uploaded images. We use third-party providers to operate the service.",
+      "If Google AdSense is enabled, advertising cookies may be used on blog pages. You can manage cookies in your browser settings and, where available, use Google ad settings or other opt-out tools to control personalized ads.",
     ],
     bullets: [
       "Vercel: hosting, request logs, function logs, and performance logs.",
@@ -119,7 +122,7 @@ const sections = [
     title: "11. User Rights",
     body: [
       "Depending on your location, you may have rights regarding your personal information, including access, correction, deletion, objection, withdrawal of consent, data portability, and opt-out rights for cookies or advertising technologies.",
-      "To request access, correction, or deletion, contact us at [Support Email].",
+      "To request access, correction, or deletion, contact us through the Contact page on the website.",
     ],
   },
   {
@@ -132,11 +135,11 @@ const sections = [
     title: "13. Contact Us",
     body: [
       "PixelLift AI",
-      "Company / Owner: [Company Name]",
-      "Address: [Business Address]",
-      "Jurisdiction: [Jurisdiction]",
-      "Email: [Support Email]",
-      "Website: [Website URL]",
+      "Operator: PixelLift AI",
+      "Address: Not publicly listed.",
+      "Jurisdiction: Not publicly specified.",
+      "Contact: Use the Contact page on the website.",
+      `Website: ${siteUrl}`,
     ],
   },
 ];
@@ -157,8 +160,8 @@ export default function PrivacyPage() {
             services.
           </p>
           <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.06)]">
-            <p className="text-sm text-slate-500">Effective Date: [Effective Date]</p>
-            <p className="mt-1 text-sm text-slate-500">Last Updated: [Last Updated Date]</p>
+            <p className="text-sm text-slate-500">Effective Date: May 18, 2026</p>
+            <p className="mt-1 text-sm text-slate-500">Last Updated: May 18, 2026</p>
           </div>
         </header>
 

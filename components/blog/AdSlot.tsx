@@ -12,10 +12,16 @@ export function AdSlot({ slot, format = "auto" }: AdSlotProps) {
     );
   }
 
+  const clientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+
+  if (!clientId) {
+    return null;
+  }
+
   return (
     <ins
       className="adsbygoogle block w-full max-w-full overflow-hidden"
-      data-ad-client="ca-pub-XXXXXXXXX"
+      data-ad-client={clientId}
       data-ad-slot={slot}
       data-ad-format={format}
       data-full-width-responsive="true"

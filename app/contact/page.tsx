@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ContactForm } from "@/components/contact/ContactForm";
 
 export const revalidate = 86400;
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pixelliftai.online";
 
 export const metadata: Metadata = {
   title: "Contact - PixelLift AI",
@@ -27,21 +28,18 @@ export default function ContactPage() {
 
             <div className="mt-8 space-y-4 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.06)] sm:p-6">
               <div>
-                <p className="text-sm font-medium text-slate-500">Email</p>
-                <a
-                  href="mailto:[Support Email]"
-                  className="mt-1 inline-flex break-all text-base font-semibold text-blue-600 hover:text-blue-700"
-                >
-                  [Support Email]
-                </a>
+                <p className="text-sm font-medium text-slate-500">Support</p>
+                <p className="mt-1 text-base leading-7 text-slate-600">
+                  Use the contact form on this page and we&apos;ll respond as soon as possible.
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-slate-500">Website</p>
                 <Link
-                  href="/"
+                  href={siteUrl}
                   className="mt-1 inline-flex break-all text-base font-semibold text-blue-600 hover:text-blue-700"
                 >
-                  [Website URL]
+                  {siteUrl}
                 </Link>
               </div>
               <div>
