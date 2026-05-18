@@ -5,7 +5,7 @@ const DEFAULT_GITHUB_REPO = "PixelLift-AI";
 const DEFAULT_GITHUB_BRANCH = "main";
 
 export function getKeystaticStorageKind(): KeystaticStorageKind {
-  return process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE_KIND === "github"
+  return process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE_KIND?.trim().toLowerCase() === "github"
     ? "github"
     : "local";
 }

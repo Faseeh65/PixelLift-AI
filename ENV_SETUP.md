@@ -69,6 +69,9 @@ Important:
 - Production secrets belong in Vercel only.
 - Do not place production secrets in GitHub files.
 - Redeploy after changing environment variables.
+- `NEXT_PUBLIC_APP_URL` must match the live domain exactly.
+- If the live site is `https://www.pixelliftai.online`, then your GitHub OAuth callback must also use `https://www.pixelliftai.online/api/keystatic/github/oauth/callback`.
+- If the live site is `https://pixelliftai.online`, then your GitHub OAuth callback must also use `https://pixelliftai.online/api/keystatic/github/oauth/callback`.
 
 ## 4. GitHub OAuth App settings
 
@@ -81,6 +84,8 @@ Use these values:
 - Application name: `PixelLift AI Keystatic`
 - Homepage URL: `https://your-live-domain.vercel.app`
 - Authorization callback URL: `https://your-live-domain.vercel.app/api/keystatic/github/oauth/callback`
+
+Make sure the hostname matches `NEXT_PUBLIC_APP_URL` exactly, including whether it uses `www` or not.
 
 GitHub will generate:
 

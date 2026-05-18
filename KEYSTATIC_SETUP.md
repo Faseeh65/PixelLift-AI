@@ -36,6 +36,8 @@ Also keep the existing app environment variables configured:
 
 Production `/keystatic` is intentionally blocked unless the required GitHub/OAuth values are present.
 That protects the live site from showing a broken admin UI.
+The live domain in `NEXT_PUBLIC_APP_URL` and the GitHub OAuth callback URL must match exactly.
+If the site uses `www`, the callback must also use `www`.
 
 When production GitHub mode is configured correctly:
 
