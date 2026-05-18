@@ -1,6 +1,9 @@
 import { makeRouteHandler } from "@keystatic/next/route-handler";
 import config from "../../../../keystatic.config";
-import { isKeystaticProductionAdminEnabled } from "@/lib/keystatic-server";
+import {
+  getKeystaticGitHubAuthConfig,
+  isKeystaticProductionAdminEnabled,
+} from "@/lib/keystatic-server";
 
 export const runtime = "nodejs";
 
@@ -11,6 +14,7 @@ function blockInProduction() {
 function createKeystaticApi() {
   return makeRouteHandler({
     config,
+    ...getKeystaticGitHubAuthConfig(),
   });
 }
 

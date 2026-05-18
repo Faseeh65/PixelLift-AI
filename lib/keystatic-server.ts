@@ -1,23 +1,24 @@
 import "server-only";
 
 import {
+  getKeystaticStorageKind,
   isKeystaticGitHubModeRequested,
   isKeystaticGitHubStorageConfigured,
 } from "./keystatic-public";
 
 let didLogKeystaticEnvStatus = false;
 
-function hasKeystaticAuthSecrets(): boolean {
-  const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID?.trim();
-  const clientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET?.trim();
-  const secret = process.env.KEYSTATIC_SECRET?.trim();
+function getTrimmedEnv(name: string): string | undefined {
+  const value = process.env[name]?.trim();
+  return value ? value : undefined;
+}
 
-  return Boolean(
-    clientId &&
-      clientSecret &&
-      secret &&
-      secret.length >= 32
-  );
+function hasKeystaticAuthSecrets(): boolean {
+  const clientId = getTrimmedEnv("KEYSTATIC_GITHUB_CLIENT_ID");
+  const clientSecret = getTrimmedEnv("KEYSTATIC_GITHUB_CLIENT_SECRET");
+  const secret = getTrimmedEnv("KEYSTATIC_SECRET");
+
+  return Boolean(clientId && clientSecret && secret && secret.length >= 32);
 }
 
 function logKeystaticEnvStatus() {
@@ -27,36 +28,31 @@ function logKeystaticEnvStatus() {
 
   didLogKeystaticEnvStatus = true;
 
-  const storageKind =
-    process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE_KIND?.trim().toLowerCase() ===
-    "github";
+  const storageKind = getKeystaticStorageKind();
   const repoOwner = Boolean(
-    process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER?.trim()
+    getTrimmedEnv("NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER")
   );
   const repoName = Boolean(
-    process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME?.trim()
+    getTrimmedEnv("NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME")
   );
-  const branch = Boolean(process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_BRANCH?.trim());
-  const clientId = Boolean(process.env.KEYSTATIC_GITHUB_CLIENT_ID?.trim());
-  const clientSecret = Boolean(
-    process.env.KEYSTATIC_GITHUB_CLIENT_SECRET?.trim()
-  );
-  const secretValue = process.env.KEYSTATIC_SECRET?.trim();
+  const branch = Boolean(getTrimmedEnv("NEXT_PUBLIC_KEYSTATIC_GITHUB_BRANCH"));
+  const clientId = Boolean(getTrimmedEnv("KEYSTATIC_GITHUB_CLIENT_ID"));
+  const clientSecret = Boolean(getTrimmedEnv("KEYSTATIC_GITHUB_CLIENT_SECRET"));
+  const secretValue = getTrimmedEnv("KEYSTATIC_SECRET");
   const secret = Boolean(secretValue);
   const secretLongEnough = Boolean(secretValue && secretValue.length >= 32);
-  const appUrl = Boolean(process.env.NEXT_PUBLIC_APP_URL?.trim());
+  const appUrl = getTrimmedEnv("NEXT_PUBLIC_APP_URL") ?? "";
 
-  console.info("Keystatic production env diagnostics", {
-    NEXT_PUBLIC_KEYSTATIC_STORAGE_KIND_github: storageKind,
-    NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER_present: repoOwner,
-    NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME_present: repoName,
-    NEXT_PUBLIC_KEYSTATIC_GITHUB_BRANCH_present: branch,
-    KEYSTATIC_GITHUB_CLIENT_ID_present: clientId,
-    KEYSTATIC_GITHUB_CLIENT_SECRET_present: clientSecret,
-    KEYSTATIC_SECRET_present: secret,
-    KEYSTATIC_SECRET_length_ge_32: secretLongEnough,
-    NEXT_PUBLIC_APP_URL_present: appUrl,
-  });
+  console.info("Keystatic production mode:", true);
+  console.info("storage kind:", storageKind);
+  console.info("NEXT_PUBLIC_APP_URL:", appUrl);
+  console.info("GitHub client id present:", clientId);
+  console.info("GitHub client secret present:", clientSecret);
+  console.info("KEYSTATIC_SECRET present:", secret);
+  console.info("KEYSTATIC_SECRET length >= 32:", secretLongEnough);
+  console.info("repo owner present:", repoOwner);
+  console.info("repo name present:", repoName);
+  console.info("repo branch present:", branch);
 }
 
 export function isKeystaticProductionAdminEnabled(): boolean {
@@ -71,4 +67,12 @@ export function isKeystaticProductionAdminEnabled(): boolean {
     isKeystaticGitHubStorageConfigured() &&
     hasKeystaticAuthSecrets()
   );
+}
+
+export function getKeystaticGitHubAuthConfig() {
+  return {
+    clientId: getTrimmedEnv("KEYSTATIC_GITHUB_CLIENT_ID"),
+    clientSecret: getTrimmedEnv("KEYSTATIC_GITHUB_CLIENT_SECRET"),
+    secret: getTrimmedEnv("KEYSTATIC_SECRET"),
+  };
 }

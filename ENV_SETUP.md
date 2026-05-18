@@ -50,7 +50,7 @@ Set production values in Vercel, not in GitHub code.
 Example production values:
 
 ```env
-NEXT_PUBLIC_APP_URL=https://your-live-domain.vercel.app
+NEXT_PUBLIC_APP_URL=https://pixelliftai.online
 PICSART_API_KEY=your_real_picsart_api_key
 NEXT_PUBLIC_SUPABASE_URL=your_real_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_real_supabase_anon_key
@@ -82,8 +82,8 @@ Create an OAuth App in GitHub:
 Use these values:
 
 - Application name: `PixelLift AI Keystatic`
-- Homepage URL: `https://your-live-domain.vercel.app`
-- Authorization callback URL: `https://your-live-domain.vercel.app/api/keystatic/github/oauth/callback`
+- Homepage URL: `https://pixelliftai.online`
+- Authorization callback URL: `https://pixelliftai.online/api/keystatic/github/oauth/callback`
 
 Make sure the hostname matches `NEXT_PUBLIC_APP_URL` exactly, including whether it uses `www` or not.
 

@@ -18,6 +18,7 @@ Use GitHub-backed Keystatic only when the required environment variables are set
 
 Set these in Vercel:
 
+- `NEXT_PUBLIC_APP_URL=https://pixelliftai.online`
 - `NEXT_PUBLIC_KEYSTATIC_STORAGE_KIND=github`
 - `NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER=Faseeh65`
 - `NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME=PixelLift-AI`
@@ -32,12 +33,16 @@ Also keep the existing app environment variables configured:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
-- `NEXT_PUBLIC_APP_URL`
 
 Production `/keystatic` is intentionally blocked unless the required GitHub/OAuth values are present.
 That protects the live site from showing a broken admin UI.
 The live domain in `NEXT_PUBLIC_APP_URL` and the GitHub OAuth callback URL must match exactly.
 If the site uses `www`, the callback must also use `www`.
+For the current live domain, the GitHub OAuth callback URL must be:
+
+```text
+https://pixelliftai.online/api/keystatic/github/oauth/callback
+```
 
 When production GitHub mode is configured correctly:
 
