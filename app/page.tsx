@@ -5,7 +5,7 @@ export const revalidate = 86400;
 
 export const metadata = {
   title: "PixelLift AI - AI Image Enhancement",
-  description: "Transform your images to ultra-HD with AI-powered enhancement.",
+  description: "Transform your images with AI-powered enhancement.",
 };
 
 const features = [
@@ -53,8 +53,8 @@ export default function HomePage() {
                   Transform Your Images to Ultra-HD
                 </h1>
                 <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                  Upscale and enhance your photos to 10000x8000 pixels with AI precision. Preserve
-                  details, sharpen edges, and restore natural colors in seconds.
+                  Upscale and enhance your photos with AI precision. Preserve details, sharpen edges,
+                  and restore natural colors in seconds.
                 </p>
               </div>
 
