@@ -9,6 +9,7 @@ export const runtime = "nodejs";
 
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/jpg", "image/png", "image/webp"]);
+const MAX_FILE_NAME_LENGTH = 180;
 
 function isAllowedImageType(type: string): boolean {
   return ALLOWED_IMAGE_TYPES.has(type.toLowerCase());
@@ -16,6 +17,33 @@ function isAllowedImageType(type: string): boolean {
 
 function buildDataUrl(fileBuffer: Buffer, fileType: string): string {
   return `data:${fileType};base64,${fileBuffer.toString("base64")}`;
+}
+
+function hasSafeFileName(name: string): boolean {
+  return (
+    name.length > 0 &&
+    name.length <= MAX_FILE_NAME_LENGTH &&
+    !/[<>:"/\\|?*\x00-\x1F]/.test(name)
+  );
+}
+
+function hasValidImageSignature(fileBuffer: Buffer, fileType: string): boolean {
+  if (fileType === "image/jpeg" || fileType === "image/jpg") {
+    return fileBuffer[0] === 0xff && fileBuffer[1] === 0xd8 && fileBuffer[2] === 0xff;
+  }
+
+  if (fileType === "image/png") {
+    return fileBuffer.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+  }
+
+  if (fileType === "image/webp") {
+    return (
+      fileBuffer.subarray(0, 4).toString("ascii") === "RIFF" &&
+      fileBuffer.subarray(8, 12).toString("ascii") === "WEBP"
+    );
+  }
+
+  return false;
 }
 
 async function maybeStoreEnhancementHistory(params: {
@@ -64,8 +92,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const scale = getPicsartUpscaleFactor(modeValue);
     const fileBuffer = Buffer.from(await fileValue.arrayBuffer());
+    if (!hasSafeFileName(fileValue.name)) {
+      return NextResponse.json(
+        { success: false, error: "Please rename the file and try again." },
+        { status: 400 }
+      );
+    }
+
+    if (!hasValidImageSignature(fileBuffer, fileValue.type.toLowerCase())) {
+      return NextResponse.json(
+        { success: false, error: "The uploaded file does not appear to be a valid image." },
+        { status: 400 }
+      );
+    }
+
+    const scale = getPicsartUpscaleFactor(modeValue);
 
     const supabase = await createSupabaseServerClient();
     const { data: userResult } = await supabase.auth.getUser();

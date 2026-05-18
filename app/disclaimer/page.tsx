@@ -18,6 +18,9 @@ const sections = [
   },
   {
     title: "2. AI Output Disclaimer",
+    body: [
+      "AI image enhancement can improve many images, but we do not guarantee that:",
+    ],
     bullets: [
       "Every image will be enhanced successfully.",
       "The result will match your expectations.",

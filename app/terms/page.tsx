@@ -55,6 +55,9 @@ const sections = [
   },
   {
     title: "6. User Responsibility for Uploaded Content",
+    body: [
+      "You are responsible for the images you upload and must not upload images that:",
+    ],
     bullets: [
       "You do not own or have permission to use.",
       "Violate copyright, trademark, privacy, publicity, or other rights.",

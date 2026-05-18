@@ -5,10 +5,6 @@ import { getAllPosts } from "@/lib/blog";
 
 export const revalidate = 3600;
 
-interface BlogPageProps {
-  searchParams?: Promise<{ page?: string }>;
-}
-
 export const metadata: Metadata = {
   title: "PixelLift AI Blog — AI Image Enhancement Tips",
   description:
@@ -24,14 +20,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const params = (await Promise.resolve(searchParams ?? {})) as { page?: string };
-  const page = Math.max(Number(params.page ?? "1"), 1);
-  const perPage = 9;
+export default async function BlogPage() {
   const posts = await getAllPosts();
   const total = posts.length;
-  const totalPages = Math.max(Math.ceil(total / perPage), 1);
-  const visiblePosts = posts.slice((page - 1) * perPage, page * perPage);
 
   return (
     <section className="relative overflow-hidden bg-[#F8FAFC] text-slate-900">
@@ -52,9 +43,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           <AdSlot slot="blog-header" format="leaderboard" />
         </div>
 
-        {visiblePosts.length > 0 ? (
+        {posts.length > 0 ? (
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {visiblePosts.map((post) => (
+            {posts.map((post) => (
               <BlogCard key={post.slug} post={post} />
             ))}
           </div>
@@ -64,22 +55,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           </div>
         )}
 
-        <div className="mt-10 flex flex-col gap-3 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            Page {page} of {totalPages} | {total} posts total
-          </p>
-          <div className="flex gap-3 sm:justify-end">
-            {page > 1 ? (
-              <a className="text-blue-600 hover:text-blue-700" href={`/blog?page=${page - 1}`}>
-                Previous
-              </a>
-            ) : null}
-            {page < totalPages ? (
-              <a className="text-blue-600 hover:text-blue-700" href={`/blog?page=${page + 1}`}>
-                Next
-              </a>
-            ) : null}
-          </div>
+        <div className="mt-10 text-sm text-slate-500">
+          <p>{total} posts total</p>
         </div>
       </div>
     </section>

@@ -22,15 +22,14 @@ export default function ContactPage() {
               Get in touch with PixelLift AI
             </h1>
             <p className="mt-5 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-              Have questions, feedback, or suggestions? Send us a message and we&apos;ll get back to you as
-              soon as possible.
+              Have questions, feedback, or suggestions? Send us a message through the form below.
             </p>
 
             <div className="mt-8 space-y-4 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.06)] sm:p-6">
               <div>
                 <p className="text-sm font-medium text-slate-500">Support</p>
                 <p className="mt-1 text-base leading-7 text-slate-600">
-                  Use the contact form on this page and we&apos;ll respond as soon as possible.
+                  Use the contact form on this page for support, privacy requests, copyright concerns, or product feedback.
                 </p>
               </div>
               <div>
@@ -45,7 +44,7 @@ export default function ContactPage() {
               <div>
                 <p className="text-sm font-medium text-slate-500">Response time</p>
                 <p className="mt-1 text-sm leading-7 text-slate-600">
-                  We try to respond as quickly as possible, usually within 1 to 2 business days.
+                  Messages are recorded for review. A direct public support email is not currently listed.
                 </p>
               </div>
             </div>

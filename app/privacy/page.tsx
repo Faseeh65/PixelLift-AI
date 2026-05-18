@@ -33,6 +33,7 @@ const sections = [
       "Device, log, and technical information such as browser type, device type, OS, referrer, pages visited, performance data, and security logs.",
       "Cookies and similar technologies for authentication, preferences, analytics, and AdSense on blog pages.",
       "If Google AdSense is enabled, Google and its partners may use cookies, device identifiers, and similar technologies to serve and measure ads based on your visits to this site and other websites.",
+      "If Google AdSense is enabled, third-party vendors including Google may place and read cookies in your browser, or use web beacons, IP addresses, device identifiers, and similar technologies as a result of ad serving.",
     ],
   },
   {
@@ -74,7 +75,7 @@ const sections = [
       "Vercel: hosting, request logs, function logs, and performance logs.",
       "Supabase: authentication, user accounts, database storage, usage logs, enhancement history, and Row Level Security.",
       "Picsart: AI image processing using the Upscale API.",
-      "Google AdSense: ads on blog pages, depending on consent and regional law.",
+      "Google AdSense: ads on blog pages if enabled, depending on consent and regional law.",
       "Google OAuth: account creation and login if you choose Google sign-in.",
     ],
   },
@@ -112,27 +113,33 @@ const sections = [
     ],
   },
   {
-    title: "10. User Accounts and Authentication",
+    title: "10. Children’s Privacy",
+    body: [
+      "PixelLift AI is not directed to children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information, contact us through the Contact page so we can review the request.",
+    ],
+  },
+  {
+    title: "11. User Accounts and Authentication",
     body: [
       "PixelLift AI uses Supabase Auth for login and registration. Users may be able to sign up or log in using email/password or Google OAuth.",
       "Logged-in users can access the dashboard and view enhancement history. Anonymous users can still use the tool but with a lower daily limit.",
     ],
   },
   {
-    title: "11. User Rights",
+    title: "12. User Rights",
     body: [
       "Depending on your location, you may have rights regarding your personal information, including access, correction, deletion, objection, withdrawal of consent, data portability, and opt-out rights for cookies or advertising technologies.",
       "To request access, correction, or deletion, contact us through the Contact page on the website.",
     ],
   },
   {
-    title: "12. Changes to This Privacy Policy",
+    title: "13. Changes to This Privacy Policy",
     body: [
       "We may update this Privacy Policy from time to time. If we make material changes, we may notify users through website notices, in-app notices, email notices, or an updated Last Updated date.",
     ],
   },
   {
-    title: "13. Contact Us",
+    title: "14. Contact Us",
     body: [
       "PixelLift AI",
       "Operator: PixelLift AI",

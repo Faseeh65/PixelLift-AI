@@ -47,7 +47,7 @@ export function ContactForm() {
         throw new Error(payload.error ?? "Unable to send your message.");
       }
 
-      toast.success("Thanks. Your message has been sent.");
+      toast.success("Thanks. Your message was received.");
       setForm(initialState);
     } catch (error) {
       console.error("[contact-form] error:", error);
@@ -69,6 +69,7 @@ export function ContactForm() {
             placeholder="Your name"
             type="text"
             autoComplete="name"
+            required
           />
         </label>
         <label className="space-y-2">
@@ -80,6 +81,7 @@ export function ContactForm() {
             placeholder="you@example.com"
             type="email"
             autoComplete="email"
+            required
           />
         </label>
       </div>
@@ -92,6 +94,7 @@ export function ContactForm() {
           className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white"
           placeholder="How can we help?"
           type="text"
+          required
         />
       </label>
 
@@ -103,6 +106,8 @@ export function ContactForm() {
           className="min-h-40 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white"
           placeholder="Write your message here..."
           rows={7}
+          required
+          minLength={10}
         />
       </label>
 
