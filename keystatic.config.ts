@@ -1,4 +1,9 @@
 import { collection, config, fields } from "@keystatic/core";
+import {
+  getKeystaticGitHubRepo,
+  hasKeystaticGitHubRepoEnvConfig,
+  getKeystaticStorageKind,
+} from "./lib/keystatic-public";
 
 type PreviewProps = {
   value?: unknown;
@@ -13,9 +18,17 @@ function formatTagLabel(props: PreviewProps): string {
 }
 
 export default config({
-  storage: {
-    kind: "local",
-  },
+  storage:
+    process.env.NODE_ENV === "production" &&
+    getKeystaticStorageKind() === "github" &&
+    hasKeystaticGitHubRepoEnvConfig()
+      ? {
+          kind: "github",
+          repo: getKeystaticGitHubRepo(),
+        }
+      : {
+          kind: "local",
+        },
   collections: {
     posts: collection({
       label: "Blog Posts",
