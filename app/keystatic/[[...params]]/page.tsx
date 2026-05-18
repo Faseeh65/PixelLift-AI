@@ -1,13 +1,11 @@
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import KeystaticApp from "../keystatic";
-import { isKeystaticProductionAdminEnabled } from "@/lib/keystatic-server";
 
 export const dynamic = "force-dynamic";
 
 export default function KeystaticPage() {
-  // Production only works when GitHub-backed Keystatic is fully configured.
-  if (!isKeystaticProductionAdminEnabled()) {
+  if (process.env.NODE_ENV === "production") {
     notFound();
   }
 

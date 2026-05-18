@@ -2,23 +2,17 @@
 
 This project uses local environment files for development and Vercel environment variables for production.
 
-## 1. `.env.example`
+## `.env.example`
 
-`.env.example` is safe to commit.
-
-It should contain placeholders only:
+`.env.example` is safe to commit and contains placeholders only:
 
 - no real API keys
 - no private secrets
 - no production-only credentials
 
-Use it as the template for new developers and for documenting required variables.
+## `.env.local`
 
-## 2. `.env.local`
-
-`.env.local` is for your own machine only.
-
-Do not commit it to GitHub.
+`.env.local` is for your own machine only. Do not commit it to GitHub.
 
 Example local values:
 
@@ -28,22 +22,9 @@ PICSART_API_KEY=your_real_picsart_api_key
 NEXT_PUBLIC_SUPABASE_URL=your_real_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_real_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_real_service_role_key
-NEXT_PUBLIC_KEYSTATIC_STORAGE_KIND=local
-NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER=Faseeh65
-NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME=PixelLift-AI
-NEXT_PUBLIC_KEYSTATIC_GITHUB_BRANCH=main
-KEYSTATIC_GITHUB_CLIENT_ID=
-KEYSTATIC_GITHUB_CLIENT_SECRET=
-KEYSTATIC_SECRET=
 ```
 
-Notes:
-
-- Use `NEXT_PUBLIC_KEYSTATIC_STORAGE_KIND=local` for normal development.
-- Keep private values on your machine only.
-- Never push `.env.local` to GitHub.
-
-## 3. Vercel Environment Variables
+## Vercel Environment Variables
 
 Set production values in Vercel, not in GitHub code.
 
@@ -55,76 +36,16 @@ PICSART_API_KEY=your_real_picsart_api_key
 NEXT_PUBLIC_SUPABASE_URL=your_real_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_real_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_real_service_role_key
-NEXT_PUBLIC_KEYSTATIC_STORAGE_KIND=github
-NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER=Faseeh65
-NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME=PixelLift-AI
-NEXT_PUBLIC_KEYSTATIC_GITHUB_BRANCH=main
-KEYSTATIC_GITHUB_CLIENT_ID=your_real_github_oauth_client_id
-KEYSTATIC_GITHUB_CLIENT_SECRET=your_real_github_oauth_client_secret
-KEYSTATIC_SECRET=your_random_secure_secret
 ```
 
-Important:
+## Keystatic
 
-- Production secrets belong in Vercel only.
-- Do not place production secrets in GitHub files.
-- Redeploy after changing environment variables.
-- `NEXT_PUBLIC_APP_URL` must match the live domain exactly.
-- If the live site is `https://www.pixelliftai.online`, then your GitHub OAuth callback must also use `https://www.pixelliftai.online/api/keystatic/github/oauth/callback`.
-- If the live site is `https://pixelliftai.online`, then your GitHub OAuth callback must also use `https://pixelliftai.online/api/keystatic/github/oauth/callback`.
+Keystatic is local-only.
 
-## 4. GitHub OAuth App settings
+- No Keystatic GitHub OAuth environment variables are needed.
+- No Keystatic production editing environment variables are needed.
+- Write blog posts locally at `http://localhost:3000/keystatic`.
+- Commit markdown files from `content/blog/`.
+- Push to GitHub so Vercel redeploys and publishes the blog.
 
-Create an OAuth App in GitHub:
-
-- Go to `GitHub -> Settings -> Developer settings -> OAuth Apps -> New OAuth App`
-
-Use these values:
-
-- Application name: `PixelLift AI Keystatic`
-- Homepage URL: `https://pixelliftai.online`
-- Authorization callback URL: `https://pixelliftai.online/api/keystatic/github/oauth/callback`
-
-Make sure the hostname matches `NEXT_PUBLIC_APP_URL` exactly, including whether it uses `www` or not.
-
-GitHub will generate:
-
-- Client ID
-- Client Secret
-
-Put those values into Vercel as:
-
-- `KEYSTATIC_GITHUB_CLIENT_ID`
-- `KEYSTATIC_GITHUB_CLIENT_SECRET`
-
-## 5. `KEYSTATIC_SECRET`
-
-`KEYSTATIC_SECRET` should be a strong random string.
-
-Guidance:
-
-- generate a long random secret
-- store it in Vercel
-- optionally place it in `.env.local` if you are testing GitHub mode locally
-- never commit it
-
-## 6. Simple workflow
-
-### Local blog writing
-
-1. Run `npm run dev`.
-2. Open `http://localhost:3000/keystatic`.
-3. Write or edit a blog post.
-4. Save the file.
-5. Commit and push the markdown change.
-6. Vercel redeploys automatically.
-
-### Live GitHub mode blog writing
-
-1. Add the GitHub OAuth env vars in Vercel.
-2. Redeploy the app.
-3. Open `https://your-live-domain.vercel.app/keystatic`.
-4. Log in with GitHub if prompted.
-5. Write or edit a post.
-6. Keystatic commits the change to GitHub.
-7. Vercel redeploys from the repository update.
+Production `/keystatic` is intentionally disabled. Public `/blog` pages continue to read committed markdown files.

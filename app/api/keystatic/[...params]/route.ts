@@ -1,35 +1,22 @@
 import { makeRouteHandler } from "@keystatic/next/route-handler";
 import config from "../../../../keystatic.config";
-import {
-  getKeystaticGitHubAuthConfig,
-  isKeystaticProductionAdminEnabled,
-} from "@/lib/keystatic-server";
 
 export const runtime = "nodejs";
 
-function blockInProduction() {
-  return new Response("Not Found", { status: 404 });
-}
-
-function createKeystaticApi() {
-  return makeRouteHandler({
-    config,
-    ...getKeystaticGitHubAuthConfig(),
-  });
-}
+const keystaticApi = makeRouteHandler({ config });
 
 export function GET(request: Request) {
-  if (!isKeystaticProductionAdminEnabled()) {
-    return blockInProduction();
+  if (process.env.NODE_ENV === "production") {
+    return new Response("Not Found", { status: 404 });
   }
 
-  return createKeystaticApi().GET(request);
+  return keystaticApi.GET(request);
 }
 
 export function POST(request: Request) {
-  if (!isKeystaticProductionAdminEnabled()) {
-    return blockInProduction();
+  if (process.env.NODE_ENV === "production") {
+    return new Response("Not Found", { status: 404 });
   }
 
-  return createKeystaticApi().POST(request);
+  return keystaticApi.POST(request);
 }
