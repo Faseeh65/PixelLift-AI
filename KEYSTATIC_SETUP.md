@@ -34,6 +34,9 @@ Also keep the existing app environment variables configured:
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_APP_URL`
 
+Production `/keystatic` is intentionally blocked unless the required GitHub/OAuth values are present.
+That protects the live site from showing a broken admin UI.
+
 When production GitHub mode is configured correctly:
 
 1. Open `https://yourdomain.com/keystatic`.
@@ -46,3 +49,4 @@ When production GitHub mode is configured correctly:
 
 Local Keystatic mode is not a safe way to store permanent blog edits on a live Vercel deployment.
 Do not rely on the Vercel filesystem for persistent content.
+Public `/blog` pages still work from the committed markdown files regardless of admin mode.
