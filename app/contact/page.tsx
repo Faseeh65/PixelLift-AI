@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/contact/ContactForm";
 
 export const revalidate = 86400;
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pixelliftai.online";
+const contactEmail = "faseeeh.65@gmail.com";
 
 export const metadata: Metadata = {
   title: "Contact - PixelLift AI",
@@ -44,7 +45,11 @@ export default function ContactPage() {
               <div>
                 <p className="text-sm font-medium text-slate-500">Response time</p>
                 <p className="mt-1 text-sm leading-7 text-slate-600">
-                  Messages are recorded for review. A direct public support email is not currently listed.
+                  Messages are sent directly to support for review. You can also email us at{" "}
+                  <Link href={`mailto:${contactEmail}`} className="font-semibold text-blue-600 hover:text-blue-700">
+                    {contactEmail}
+                  </Link>
+                  .
                 </p>
               </div>
             </div>

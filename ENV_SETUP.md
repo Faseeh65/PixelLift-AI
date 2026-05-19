@@ -22,6 +22,9 @@ PICSART_API_KEY=your_real_picsart_api_key
 NEXT_PUBLIC_SUPABASE_URL=your_real_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_real_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_real_service_role_key
+RESEND_API_KEY=your_resend_api_key
+CONTACT_TO_EMAIL=faseeeh.65@gmail.com
+CONTACT_FROM_EMAIL=your_verified_sender_email
 ```
 
 ## Vercel Environment Variables
@@ -36,7 +39,26 @@ PICSART_API_KEY=your_real_picsart_api_key
 NEXT_PUBLIC_SUPABASE_URL=your_real_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_real_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_real_service_role_key
+RESEND_API_KEY=your_resend_api_key
+CONTACT_TO_EMAIL=faseeeh.65@gmail.com
+CONTACT_FROM_EMAIL=your_verified_sender_email
 ```
+
+## Contact Form Email
+
+Required Vercel env vars:
+
+```env
+RESEND_API_KEY=your_resend_api_key
+CONTACT_TO_EMAIL=faseeeh.65@gmail.com
+CONTACT_FROM_EMAIL=your_verified_sender_email
+```
+
+Notes:
+
+- `CONTACT_FROM_EMAIL` must be verified in Resend.
+- Do not use `NEXT_PUBLIC_RESEND_API_KEY`.
+- Redeploy after adding env vars.
 
 ## Keystatic
 

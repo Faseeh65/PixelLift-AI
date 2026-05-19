@@ -29,6 +29,7 @@ const sections = [
       "Images you upload, including JPG, JPEG, PNG, and WEBP files up to 5MB.",
       "Account information such as email address, user ID, display name, avatar URL, and session information.",
       "Usage information for free daily limits, including enhancement count, user ID or IP address, selected mode, and date of usage.",
+      "Contact form submissions, including name, email address, subject if provided, message, page/source, submitted time, and IP address if safely available.",
       "Enhancement history for logged-in users, including original URL, enhanced URL, enhancement mode, file size, status, and error message.",
       "Device, log, and technical information such as browser type, device type, OS, referrer, pages visited, performance data, and security logs.",
       "Cookies and similar technologies for authentication, preferences, analytics, and AdSense on blog pages.",
@@ -39,7 +40,7 @@ const sections = [
   {
     title: "3. How We Use Your Information",
     body: [
-      "We use collected information to provide the AI image enhancement tool, process uploads, return enhanced results, manage accounts, store enhancement history, enforce daily limits, improve performance, and comply with legal obligations.",
+      "We use collected information to provide the AI image enhancement tool, process uploads, return enhanced results, manage accounts, store enhancement history, enforce daily limits, respond to contact form inquiries, improve performance, and comply with legal obligations.",
     ],
   },
   {
@@ -75,6 +76,7 @@ const sections = [
       "Vercel: hosting, request logs, function logs, and performance logs.",
       "Supabase: authentication, user accounts, database storage, usage logs, enhancement history, and Row Level Security.",
       "Picsart: AI image processing using the Upscale API.",
+      "Resend: contact form email delivery when you submit an inquiry.",
       "Google AdSense: ads on blog pages if enabled, depending on consent and regional law.",
       "Google OAuth: account creation and login if you choose Google sign-in.",
     ],
