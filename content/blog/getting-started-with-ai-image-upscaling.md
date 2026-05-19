@@ -24,7 +24,7 @@ If the source image is already extremely soft, the output can still improve, but
 
 ## Choose the right scale
 
-A 2x upscale is often the safest first step. It gives you a larger image while keeping the original look close to intact. A 4x upscale can be useful when you need a much larger canvas, but it can also make flaws more visible if the source image is rough.
+A 2x upscale is often the safest first step. It gives you a larger image while keeping the original look close to intact, without making flaws too visible when the source image is rough.
 
 If you are preparing an image for a website, social post, or product page, test the smaller scale first. If that looks good, then you can decide whether the larger version is worth it.
 
@@ -35,9 +35,9 @@ A side-by-side comparison is one of the most useful parts of the workflow. It he
 The best habit is simple:
 
 - upload the cleanest source you have
-- try 2x first
+- run the 2x enhancement
 - compare the result with the original
-- only move to 4x if the image still looks natural
+- download the result if it still looks natural
 
 ## Know the limits
 
