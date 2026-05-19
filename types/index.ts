@@ -1,6 +1,6 @@
 import type { Node as MarkdocNode } from "@markdoc/markdoc";
 
-export type EnhancementMode = "2x" | "4x" | "denoise";
+export type EnhancementMode = "2x";
 
 export interface User {
   id: string;

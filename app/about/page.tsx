@@ -18,8 +18,8 @@ export default function AboutPage() {
             About PixelLift AI
           </h1>
           <p className="mt-5 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-            PixelLift AI is an AI-powered image enhancement web app that helps users upscale, sharpen,
-            denoise, and improve images in seconds.
+            PixelLift AI is an AI-powered image enhancement web app that helps users upscale and improve
+            images in seconds.
           </p>
         </header>
 

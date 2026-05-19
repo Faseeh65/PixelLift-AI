@@ -31,7 +31,7 @@ const features = [
 
 const steps = [
   ["Upload", "Add a JPG, PNG, or WEBP file."],
-  ["Enhance", "Choose a mode and process the image."],
+  ["Enhance", "Process the image with 2x upscaling."],
   ["Download", "Save the improved version instantly."],
 ] as const;
 

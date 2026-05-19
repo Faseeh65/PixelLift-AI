@@ -1,4 +1,4 @@
-export type PicsartUpscaleFactor = 2 | 4;
+export type PicsartUpscaleFactor = 2;
 
 interface PicsartResultItem {
   id?: string;
@@ -46,8 +46,8 @@ function normalizeOutputUrl(payload: PicsartUpscaleResponse): string | null {
 }
 
 export function getPicsartUpscaleFactor(mode: string): PicsartUpscaleFactor {
-  if (mode === "4x") {
-    return 4;
+  if (mode !== "2x") {
+    throw new Error("Unsupported enhancement mode.");
   }
 
   return 2;

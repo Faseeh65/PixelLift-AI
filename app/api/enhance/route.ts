@@ -50,7 +50,7 @@ async function maybeStoreEnhancementHistory(params: {
   userId: string;
   originalUrl: string;
   enhancedUrl: string;
-  enhancementMode: "2x" | "4x" | "denoise";
+  enhancementMode: "2x";
   fileSizeBytes: number;
 }) {
   const admin = createAdminClient();
@@ -73,6 +73,13 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const fileValue = formData.get("image") ?? formData.get("file");
     const modeValue = String(formData.get("mode") ?? "2x");
+
+    if (modeValue !== "2x") {
+      return NextResponse.json(
+        { success: false, error: "That enhancement mode is no longer available." },
+        { status: 400 }
+      );
+    }
 
     if (!(fileValue instanceof File)) {
       return NextResponse.json({ success: false, error: "Please upload an image first." }, { status: 400 });
@@ -140,7 +147,7 @@ export async function POST(request: NextRequest) {
           userId: user.id,
           originalUrl,
           enhancedUrl: enhancedRemoteUrl,
-          enhancementMode: modeValue === "4x" || modeValue === "denoise" ? modeValue : "2x",
+          enhancementMode: "2x",
           fileSizeBytes: fileValue.size,
         })
       );

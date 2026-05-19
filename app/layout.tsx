@@ -21,7 +21,7 @@ const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
   title: "PixelLift AI - Free AI Image Enhancer",
-  description: "Enhance, sharpen, upscale, and denoise images in seconds with PixelLift AI.",
+  description: "Enhance and upscale images in seconds with PixelLift AI.",
   metadataBase: new URL(siteUrl),
 };
 

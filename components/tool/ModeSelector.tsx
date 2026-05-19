@@ -11,8 +11,6 @@ interface ModeSelectorProps {
 
 const modes: Array<{ value: EnhancementMode; label: string }> = [
   { value: "2x", label: "2x Upscale" },
-  { value: "4x", label: "4x Upscale" },
-  { value: "denoise", label: "Denoise" },
 ];
 
 export function ModeSelector({ selected, onChange, variant = "dark" }: ModeSelectorProps) {

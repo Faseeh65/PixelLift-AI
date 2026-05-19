@@ -91,9 +91,7 @@ export function EnhancementTool({ showUsageCounter = true, variant = "light" }: 
       } catch {
         setEnhancedUrl(payload.enhancedUrl);
       }
-      const modeLabel =
-        mode === "denoise" ? "denoised" : mode === "4x" ? "4x enhanced" : "2x enhanced";
-      toast.success(`Your image is ready and ${modeLabel}.`);
+      toast.success("Your image is ready and 2x enhanced.");
     } catch (error) {
       console.error("[enhancement-tool] error:", error);
       toast.error(error instanceof Error ? error.message : "Enhancement failed.");

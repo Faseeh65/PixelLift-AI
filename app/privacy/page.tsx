@@ -12,7 +12,7 @@ const sections = [
   {
     title: "1. Who We Are",
     body: [
-      "PixelLift AI is an online AI image enhancement platform designed to help users upscale, denoise, sharpen, and enhance images quickly. The service also includes an AI blog and tutorial section.",
+      "PixelLift AI is an online AI image enhancement platform designed to help users upscale and enhance images quickly. The service also includes an AI blog and tutorial section.",
       `Website: ${siteUrl}`,
       "Operator: PixelLift AI",
       "Business Address: Not publicly listed.",
